@@ -17,10 +17,6 @@ const plugin: EggPlugin = {
   cors: {
     enable: true,
     package: 'egg-cors'
-  },
-  swaggerdoc: {
-    enable: true,   // 是否启用。
-    package: 'egg-swagger-doc', // 指定包名称。
   }
 };
 

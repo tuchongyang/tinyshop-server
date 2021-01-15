@@ -36,8 +36,9 @@ export default class CategoryService extends Service {
         let list = await this.app.model.GoodCategory.findAll({
             where: where,
             include:[
-                {model: this.app.model.SystemFile,as: 'image'},
-            ]
+                {model: this.app.model.SystemFile,as: 'image',attributes:['id','url']},
+            ],
+            attributes:{exclude:['createdAt','updatedAt','imageId','status']}
         })
         return list;
     }

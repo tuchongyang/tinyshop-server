@@ -12,6 +12,12 @@ export default class GoodService extends Service {
         let {page = 1, pageSize = this.config.pageSize} = options;
         const where = {};
         const order =[ ["createdAt", 'DESC']]
+        if(options.merchantId){
+            where['merchantId'] = options.merchantId
+        }
+        if(options.status){
+            where['status'] = options.status
+        }
         if(options.categoryId){
             where['categoryId'] = options.categoryId
         }

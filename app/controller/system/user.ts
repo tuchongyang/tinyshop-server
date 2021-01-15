@@ -7,13 +7,70 @@ const requireLogin = require('../../middleware/requireLogin')()
 bp.prefix('/api/user', 'UserController')
 export default class UserController extends Controller {
     /** 分页列表 */
+    /**
+     * @api {get} /api/user 用户分页列表
+     * @apiName GetUser
+     * @apiGroup 用户管理
+     *
+     * @apiSuccess {String} firstname Firstname of the User.
+     * @apiSuccess {String} lastname  Lastname of the User.
+     *
+     * @apiSuccessExample 成功返回:
+     *  HTTP/1.1 200 OK
+     *  {
+            "status": 200,
+            "result": {
+                "count": 2,
+                "rows": [
+                    {
+                        "id": 1,
+                        "username": "admin",
+                        "email": null,
+                        "password": "e10adc3949ba59abbe56e057f20f883e",
+                        "name": "管理员1",
+                        "sex": 2,
+                        "avatarId": 34,
+                        "type": 1,
+                        "phone": null,
+                        "roleId": 1,
+                        "status": 1,
+                        "lastLoginTime": null,
+                        "unionid": null,
+                        "openid": null,
+                        "createdAt": "2020-08-23 08:10:20",
+                        "updatedAt": "2020-12-12 14:30:08",
+                        "role": {
+                            "id": 1,
+                            "name": "管理员",
+                            "describe": null,
+                            "status": 1,
+                            "createdAt": "2020-08-23 13:55:19",
+                            "updatedAt": "2020-11-23 11:14:54"
+                        }
+                    },
+                ]
+            }
+        }
+     *
+     */
     @bp.get('/')
     public async index() {
         const { ctx } = this;
         let list = await ctx.service.system.user.list(ctx.query)
         ctx.success(list)
     }
-
+    /**
+     * @api {post} /api/user/login 登录
+     * @apiName login
+     * @apiGroup 用户管理
+     *
+     * @apiParamExample {json} 请求示例:
+     * {
+     *      "username":"admin",
+     *      "password":"123456"
+     * }
+     * 
+     */
     @bp.post('/login')
     public async login(){
         const { ctx } = this;
@@ -25,6 +82,12 @@ export default class UserController extends Controller {
             ctx.fail(code,message);
         }
     }
+    /**
+     * @api {get} /api/user/logout 退出登录
+     * @apiName logout
+     * @apiGroup 用户管理
+     *
+     */
     @bp.get('/logout',requireLogin)
     public async logout(){
         const { ctx } = this;
@@ -44,6 +107,17 @@ export default class UserController extends Controller {
         }
     }
     
+    
+    /**
+     * @api {post} /api/user/update 修改用户信息
+     * @apiName userUpdate
+     * @apiGroup 用户管理
+     * @apiParamExample {json} 请求示例
+     * {
+     *  "name": "Eve"
+     * }
+     *
+     */
     @bp.post('/update',requireLogin)
     public async update(){
         const { ctx } = this;
@@ -66,6 +140,64 @@ export default class UserController extends Controller {
         }
     }
     
+    /**
+     * @api {get} /api/user/info 获取用户信息
+     * @apiName userInfo
+     * @apiGroup 用户管理
+     * @apiSuccessExample 成功返回:
+     * {
+        "status": 200,
+        "result": {
+            "id": 1,
+            "username": "admin",
+            "email": null,
+            "password": "e10adc3949ba59abbe56e057f20f883e",
+            "name": "管理员1",
+            "sex": 2,
+            "avatarId": 34,
+            "type": 1,
+            "phone": null,
+            "roleId": 1,
+            "status": 1,
+            "lastLoginTime": null,
+            "unionid": null,
+            "openid": null,
+            "createdAt": "2020-08-23 08:10:20",
+            "updatedAt": "2020-12-12 14:30:08",
+            "role": {
+                "id": 1,
+                "name": "管理员",
+                "describe": null,
+                "status": 1,
+                "createdAt": "2020-08-23 13:55:19",
+                "updatedAt": "2020-11-23 11:14:54"
+            },
+            "avatar": {
+                "id": 34,
+                "format": "image/png",
+                "url": "/public/uploads/2020/12/12/1607754606300671.2143153498937.png",
+                "path": "app\\public\\uploads\\2020\\12\\12\\1607754606300671.2143153498937.png",
+                "size": 113592,
+                "name": "1607754606300671.2143153498937.png",
+                "type": "image",
+                "creator": null,
+                "createdAt": "2020-12-12 14:30:06",
+                "updatedAt": "2020-12-12 14:30:06"
+            },
+            "permissions": [
+                {
+                    "id": 1,
+                    "roleId": 1,
+                    "permissionId": "user",
+                    "actions": "query,add",
+                    "createdAt": "2020-08-27 10:27:31",
+                    "updatedAt": "2020-08-27 10:27:31"
+                }
+            ]
+        }
+    }
+     *
+     */
     @bp.get('/info',requireLogin)
     public async info(){
         const { ctx } = this;
