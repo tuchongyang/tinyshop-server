@@ -6,7 +6,7 @@ const dayjs = require('dayjs');
 const pump = require('mz-modules/pump');
 
 export default class HomeController extends Controller {
-    @bp.get('/')
+    @bp.get('/api')
     public async index() {
         const { ctx } = this;
         ctx.body = "欢迎访问"

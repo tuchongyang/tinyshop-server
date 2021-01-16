@@ -8,7 +8,7 @@ bp.prefix('/api/good', 'GoodController')
 export default class GoodController extends Controller {
     /** 分页列表 */
     /**
-     * @api {post} /api/good 商品分页列表
+     * @api {get} /api/good 商品分页列表
      * @apiName goodList
      * @apiGroup 商品管理
      *
