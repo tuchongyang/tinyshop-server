@@ -19,5 +19,5 @@ app/**/*.map
 test/**/*.map
 config/**/*.map
 app/public/uploads/
-
+app/public/doc
 doc/www

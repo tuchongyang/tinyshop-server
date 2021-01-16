@@ -128,7 +128,7 @@
 
   <script id="template-article" type="text/x-handlebars-template">
     <div class="row pre-{{toLowerCase article.type}}">
-    <div class="col-md-7 no-float">
+    <div class="col-md-7">
       <article id="api-{{article.group}}-{{article.name}}-{{article.version}}" {{#if hidden}}class="hide"{{/if}} data-group="{{article.group}}" data-name="{{article.name}}" data-version="{{article.version}}">
         <div class="pull-left">
           <h3>{{article.groupTitle}}{{#if article.title}} - {{article.title}}{{/if}}</h3>
@@ -178,7 +178,7 @@
 
       </article>
     </div>
-    <div class="col-md-4 section-example no-float">
+    <div class="col-md-5 section-example">
       {{#if_gt article.examples.length compare=0}}
         <ul class="nav nav-tabs nav-tabs-examples">
           {{#each article.examples}}
@@ -197,6 +197,7 @@
         </div>
       {{/if_gt}}
 
+      {{subTemplate "article-param-block-dark" params=article.parameter _hasType=_hasTypeInParameterFields section="parameter"}}
       {{subTemplate "article-param-block-dark" params=article.success _hasType=_hasTypeInSuccessFields section="success"}}
       {{subTemplate "article-param-block-dark" params=article.error _col1="Name" _hasType=_hasTypeInErrorFields section="error"}}
 

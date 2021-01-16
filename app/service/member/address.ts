@@ -59,6 +59,17 @@ export default class AddressService extends Service {
         let data = await this.app.model.UserAddress.findOne({where: {id}})
         return data
     }
+    public async setDefault(id){
+        const { ctx } = this
+        let results = { code: 0, message: "成功", }
+        await ctx.model.UserAddress.update({isDefault: false},{
+            where:{}
+        })
+        await ctx.model.UserAddress.update({isDefault: true},{
+            where:{id: id}
+        })
+        return results
+    }
     //删除
     public async remove(id){
         let results

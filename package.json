@@ -20,7 +20,7 @@
     "autod": "autod",
     "lint": "eslint . --ext .ts",
     "clean": "ets clean",
-    "doc": "apidoc -i app/controller/ -o doc/www -t doc/template"
+    "doc": "apidoc -i app/controller/ -o app/public/doc -t doc/template"
   },
   "dependencies": {
     "dayjs": "^1.9.7",

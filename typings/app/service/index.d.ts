@@ -12,6 +12,7 @@ import ExportGoodOrder from '../../../app/service/good/order';
 import ExportLogMessage from '../../../app/service/log/message';
 import ExportMemberAddress from '../../../app/service/member/address';
 import ExportMemberFav from '../../../app/service/member/fav';
+import ExportMemberOrder from '../../../app/service/member/order';
 import ExportMerchantIndex from '../../../app/service/merchant/index';
 import ExportSystemFile from '../../../app/service/system/file';
 import ExportSystemMenu from '../../../app/service/system/menu';
@@ -33,6 +34,7 @@ declare module 'egg' {
     member: {
       address: AutoInstanceType<typeof ExportMemberAddress>;
       fav: AutoInstanceType<typeof ExportMemberFav>;
+      order: AutoInstanceType<typeof ExportMemberOrder>;
     }
     merchant: {
       index: AutoInstanceType<typeof ExportMerchantIndex>;

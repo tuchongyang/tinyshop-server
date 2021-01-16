@@ -55,9 +55,11 @@ export default class FavService extends Service {
         return data
     }
     //删除
-    public async remove(id){
+    public async cancel(options:any){
+        const { ctx } = this
         let results
-        await this.ctx.model.UserFav.destroy({ where: { id}}).then(() => {
+        options.userId = ctx.session.user.id;
+        await this.ctx.model.UserFav.destroy({ where: options}).then(() => {
             results = { code: 0, message: "删除成功", }
         }).catch(error => {
             results = { code: 400, message: error, }
