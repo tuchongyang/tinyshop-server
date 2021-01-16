@@ -14,6 +14,7 @@ import ExportMemberAddress from '../../../app/service/member/address';
 import ExportMemberFav from '../../../app/service/member/fav';
 import ExportMemberOrder from '../../../app/service/member/order';
 import ExportMerchantIndex from '../../../app/service/merchant/index';
+import ExportShopBanner from '../../../app/service/shop/banner';
 import ExportSystemFile from '../../../app/service/system/file';
 import ExportSystemMenu from '../../../app/service/system/menu';
 import ExportSystemPermission from '../../../app/service/system/permission';
@@ -38,6 +39,9 @@ declare module 'egg' {
     }
     merchant: {
       index: AutoInstanceType<typeof ExportMerchantIndex>;
+    }
+    shop: {
+      banner: AutoInstanceType<typeof ExportShopBanner>;
     }
     system: {
       file: AutoInstanceType<typeof ExportSystemFile>;

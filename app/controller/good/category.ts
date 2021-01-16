@@ -23,7 +23,7 @@ export default class GoodCategoryController extends Controller {
     }
     /** 不分页列表,树形，用于类型选择框 */
     /**
-     * @api {post} /api/goodCategory/tree 获取商品分类列表
+     * @api {get} /api/goodCategory/tree 获取商品分类列表
      * @apiName goodCategory
      * @apiGroup 商品管理
      *

@@ -10,6 +10,7 @@ import ExportGoodOrderLine from '../../../app/model/GoodOrderLine';
 import ExportGoodSpec from '../../../app/model/GoodSpec';
 import ExportLogMessage from '../../../app/model/LogMessage';
 import ExportMerchant from '../../../app/model/Merchant';
+import ExportShopBanner from '../../../app/model/ShopBanner';
 import ExportSystemFile from '../../../app/model/SystemFile';
 import ExportSystemMenu from '../../../app/model/SystemMenu';
 import ExportSystemPermission from '../../../app/model/SystemPermission';
@@ -31,6 +32,7 @@ declare module 'egg' {
     GoodSpec: ReturnType<typeof ExportGoodSpec>;
     LogMessage: ReturnType<typeof ExportLogMessage>;
     Merchant: ReturnType<typeof ExportMerchant>;
+    ShopBanner: ReturnType<typeof ExportShopBanner>;
     SystemFile: ReturnType<typeof ExportSystemFile>;
     SystemMenu: ReturnType<typeof ExportSystemMenu>;
     SystemPermission: ReturnType<typeof ExportSystemPermission>;

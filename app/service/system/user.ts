@@ -21,7 +21,7 @@ export default class UserService extends Service {
                     model: this.app.model.SystemRole,
                     as: 'role',//这里的 as需要与之前定义的as名字相同
                 }
-            ]
+            ],
         })
         return list;
     }
@@ -133,7 +133,8 @@ export default class UserService extends Service {
             include: [
                 {model: this.app.model.SystemRole,as: 'role'},
                 {model: this.app.model.SystemFile,as: 'avatar'}
-            ]
+            ],
+            attributes:{exclude:['password']}
         }).then(async res => {
             var permissions = res.dataValues.role && await ctx.model.SystemRolePermission.findAll({where: {roleId: res.dataValues.role.dataValues.id}}) ||[];
             res.dataValues.permissions = permissions||[]

@@ -11,6 +11,7 @@ import ExportMemberAddress from '../../../app/controller/member/address';
 import ExportMemberFav from '../../../app/controller/member/fav';
 import ExportMemberOrder from '../../../app/controller/member/order';
 import ExportMerchantIndex from '../../../app/controller/merchant/index';
+import ExportShopBanner from '../../../app/controller/shop/banner';
 import ExportSystemFile from '../../../app/controller/system/file';
 import ExportSystemMenu from '../../../app/controller/system/menu';
 import ExportSystemPermission from '../../../app/controller/system/permission';
@@ -36,6 +37,9 @@ declare module 'egg' {
     }
     merchant: {
       index: ExportMerchantIndex;
+    }
+    shop: {
+      banner: ExportShopBanner;
     }
     system: {
       file: ExportSystemFile;
