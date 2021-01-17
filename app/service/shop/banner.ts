@@ -25,8 +25,19 @@ export default class MerchantService extends Service {
     * 列表
     * @param params - 列表查询参数
     */
-    public async select() {
-        let list = await this.app.model.ShopBanner.findAll()
+    public async select(options) {
+        const where = {status:1};
+        if(options.merchantId){
+            where["merchantId"] = options.merchantId
+        }
+        let list = await this.app.model.ShopBanner.findAll({
+            order: [ ["sort", 'DESC'],["createdAt", 'DESC']],
+            where: where,
+            include:[
+                {model: this.app.model.SystemFile,as:'image',attributes:['id','url']}
+            ],
+            attributes:{exclude:['createdAt','updatedAt','imageId']}
+        })
         return list;
     }
     

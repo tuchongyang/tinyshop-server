@@ -7,6 +7,7 @@ const requireLogin = require('../../middleware/requireLogin')()
 bp.prefix('/api/shop/banner', 'BannerController')
 export default class BannerController extends Controller {
     /** 分页列表 */
+    
     @bp.get('/')
     public async index() {
         const { ctx } = this;
@@ -14,10 +15,45 @@ export default class BannerController extends Controller {
         ctx.success(list)
     }
     /** 不分页列表 */
+    /**
+     * @api {get} /api/shop/banner/list 首页广告图列表
+     * @apiName shopBanner
+     * @apiGroup 店铺-广告图
+     * @apiParam {Number} merchantId 店铺ID
+     * @apiSuccessExample 成功返回:
+     * {
+        "status": 200,
+        "result": [
+            {
+                "id": 4,
+                "url": "",
+                "sort": 8,
+                "merchantId": 1,
+                "status": 1,
+                "image": {
+                    "id": 84,
+                    "url": "/public/uploads/2021/01/16/1610804243994930.8798108642115.jpg"
+                }
+            },
+            {
+                "id": 3,
+                "url": "",
+                "sort": 5,
+                "merchantId": 1,
+                "status": 1,
+                "image": {
+                    "id": 83,
+                    "url": "/public/uploads/2021/01/16/1610804233531567.5261065878891.jpg"
+                }
+            }
+        ]
+    }
+     * 
+     */
     @bp.get('/list')
     public async list() {
         const { ctx } = this;
-        let list = await ctx.service.shop.banner.select()
+        let list = await ctx.service.shop.banner.select(ctx.query)
         ctx.success(list)
     }
 
