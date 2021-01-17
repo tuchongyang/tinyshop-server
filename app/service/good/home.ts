@@ -10,6 +10,7 @@ export default class GoodService extends Service {
     */
     public async list(options) {
         let {page = 1, pageSize = this.config.pageSize} = options;
+        const { Op } = this.app.Sequelize;
         const where = {};
         const order =[ ["createdAt", 'DESC']]
         if(options.merchantId){
@@ -20,6 +21,16 @@ export default class GoodService extends Service {
         }
         if(options.categoryId){
             where['categoryId'] = options.categoryId
+        }
+        if(options.name){
+            where["name"] = {
+                [Op.substring]:'%'+options.name
+            }
+        }
+        if(options.tag){
+            where["tags"] = {
+                [Op.substring]:'%'+options.tag
+            }
         }
         if(options.priceOrder>0){
             order.unshift(['salePrice', options.priceOrder==1?'ASC':'DESC'])
@@ -35,8 +46,10 @@ export default class GoodService extends Service {
             include:[
                 { model: this.app.model.SystemFile, as:'thumbnailImage'},
                 { model: this.app.model.GoodSpec, as: 'apecs' },
-            ]
+            ],
+            distinct: true
         })
+        console.log('list',list)
 
         return list;
     }

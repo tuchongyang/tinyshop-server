@@ -15,6 +15,7 @@ module.exports = app => {
         marketPrice: DECIMAL,
         sales: {type: INTEGER, defaultValue: 0}, // 销量，方便做排序
         status: { type: INTEGER, defaultValue: 1 }, //  状态：  1:上架 2：下架
+        tags: STRING  //标签，逗号隔开的字符串
     },{freezeTableName: true});
     // 表关联的字段
     Good.associate = function() {

@@ -16,7 +16,9 @@ export default class GoodController extends Controller {
      * @apiParam {Number} pageSize 分页数量
      * @apiParam {Number} merchantId 商铺Id(必传)
      * @apiParam {Number} categoryId 分类Id
+     * @apiParam {Number} name 商品名称
      * @apiParam {Number} status 状态（1:上架，2:下架）
+     * @apiParam {Number} tag 标签
      * @apiParam {Number} priceOrder 按价格排序，1为升序，2为降序
      * @apiParam {Number} salesOrder 按销量排序，1为降序，2为升序序
      * @apiParamExample {json} 请求示例:
@@ -26,7 +28,9 @@ export default class GoodController extends Controller {
      *      "merchantId": 1,
      *      "categoryId": 1,
      *      "priceOrder": 1，
-     *      "status": 1
+     *      "status": 1,
+     *      "name": "女装",
+     *      "tag":"新品"
      * }
      * @apiSuccessExample 成功返回:
      * {
@@ -46,6 +50,7 @@ export default class GoodController extends Controller {
                     "marketPrice": "89.00",//原价
                     "sales": 0,//销量
                     "status": 1,//状态：1：上架，2：下架
+                    "tags":"新品,推荐",
                     "createdAt": "2020-12-15 20:46:41",
                     "updatedAt": "2020-12-15 20:46:41",
                     "thumbnailImage": {//主图
@@ -70,20 +75,6 @@ export default class GoodController extends Controller {
                             "marketPrice": "89.00",//规格原价
                             "stock": 999,//库存
                             "sales": 0,//销量
-                            "goodId": 16,
-                            "mechantId": 1,
-                            "createdAt": "2020-12-15 20:46:41",
-                            "updatedAt": "2020-12-15 20:46:41"
-                        },
-                        {
-                            "id": 7,
-                            "name": "白色",
-                            "description": null,
-                            "pic": null,
-                            "salePrice": "160.00",
-                            "marketPrice": "99.00",
-                            "stock": 800,
-                            "sales": 0,
                             "goodId": 16,
                             "mechantId": 1,
                             "createdAt": "2020-12-15 20:46:41",
