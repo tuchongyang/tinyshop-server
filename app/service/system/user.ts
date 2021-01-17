@@ -63,7 +63,7 @@ export default class UserService extends Service {
         const { ctx } = this
         let results = { code: 500, message: "失败", }
         await ctx.model.SystemUser.update(options,{
-            where:{id: ctx.session.user.id}
+            where:{id: ctx.user.id}
         }).then(() => {
             results = { code: 0, message: "更新成功", }
         }).catch(err => {
@@ -88,17 +88,22 @@ export default class UserService extends Service {
                 const hash = crypto.createHash('md5');
                 options.password = hash.update(password).digest('hex')
                 
-                await ctx.model.SystemUser.findOne({where: options,}).then((data) => {
+                await ctx.model.SystemUser.findOne({
+                    where: options,
+                    attributes:{exclude:['password']}
+                }).then(async (data) => {
                     if(!data){
                         return (results = { code: 400, message: "帐号或密码错误", token: '' })
                     }
+                    var permissions = data.roleId && await ctx.model.SystemRolePermission.findAll({where: {roleId: data.roleId},attributes:{exclude:['createdAt','updatedAt']}}) ||[];
+                    data.setDataValue("permissions", permissions)
                     /*
                     * sign({根据什么生成token})
                     * app.config.jwt.secret 配置的密钥
                     * {expiresIn:'24h'} 过期时间
                     */
                     const token = this.app.jwt.sign({ user: data }, this.config.jwt.secret,{expiresIn:'24h'});
-                    ctx.session.user = data
+                    ctx.user = data
                     results = {  code: 0, message: "登录成功",token }
                 }).catch(err => {
                     results = { code: 400, message: err, token: '' }

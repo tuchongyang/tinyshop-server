@@ -1,6 +1,6 @@
 import { Controller } from 'egg';
 import { bp } from 'egg-blueprint'
-const requireLogin = require('../../middleware/requireLogin')
+const auth = require('../../middleware/auth')
 /**
 * @Controller 角色
 */
@@ -124,7 +124,7 @@ export default class GoodController extends Controller {
         }
     }
     
-    @bp.get('/:id',requireLogin(false))
+    @bp.get('/:id')
     public async detail(){
         const { ctx } = this;
         const data = await ctx.service.good.home.detail(ctx.params.id)

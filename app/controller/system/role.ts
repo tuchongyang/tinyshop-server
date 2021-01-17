@@ -1,16 +1,17 @@
 import { Controller } from 'egg';
 import { bp } from 'egg-blueprint'
+const auth = require('../../middleware/auth')
 /**
 * @Controller 角色
 */
 bp.prefix('/api/role', 'RoleController')
 export default class RoleController extends Controller {
     /** 分页列表 */
-    @bp.get('/')
+    @bp.get('/',auth('system_role','query'))
     public async index() {
         const { ctx } = this;
         let list = await ctx.service.system.role.list(ctx.query)
-        ctx.success(list)
+        ctx.success({list,user:ctx.user})
     }
     /** 不分页列表 */
     @bp.get('/list')
@@ -43,7 +44,7 @@ export default class RoleController extends Controller {
         }
     }
     
-    @bp.get('/:id')
+    @bp.get('/:id',auth())
     public async detail(){
         const { ctx } = this;
         const data = await ctx.service.system.role.detail(ctx.params.id)

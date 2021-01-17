@@ -87,8 +87,8 @@ export default class OrderService extends Service {
             merchantId: mechantModel.id,
             shopName: mechantModel.name,
             remark: options.remark,
-            userId: ctx.session.user.id,
-            userName: ctx.session.user.name,
+            userId: ctx.user.id,
+            userName: ctx.user.name,
             orderNo: ctx.helper.randomNo(3)
         }
         const order = await ctx.model.GoodOrder['create'](orderModel)

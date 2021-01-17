@@ -1,6 +1,6 @@
 import { Controller } from 'egg';
 import { bp } from 'egg-blueprint'
-const requireLogin = require('../../middleware/requireLogin')()
+const auth = require('../../middleware/auth')
 /**
 * @Controller 用户地址
 */
@@ -46,14 +46,14 @@ export default class FavController extends Controller {
     }
      */
     /** 分页列表 */
-    @bp.get('/',requireLogin)
+    @bp.get('/',auth())
     public async index() {
         const { ctx } = this;
         let list = await ctx.service.member.fav.list(ctx.query)
         ctx.success(list)
     }
     /** 不分页列表 */
-    @bp.get('/list',requireLogin)
+    @bp.get('/list',auth())
     public async list() {
         const { ctx } = this;
         let list = await ctx.service.member.fav.select()
@@ -71,7 +71,7 @@ export default class FavController extends Controller {
      *      "goodId": "1"
      *  }
      */
-    @bp.post('/save',requireLogin)
+    @bp.post('/save',auth())
     public async save(){
         const { ctx } = this;
         let params = ctx.request.body;
@@ -93,7 +93,7 @@ export default class FavController extends Controller {
      * }
      * 
      */
-    @bp.post('/cancel',requireLogin)
+    @bp.post('/cancel',auth())
     public async cancel(){
         const { ctx } = this;
         let ret = await ctx.service.member.fav.cancel(ctx.request.body);
@@ -104,7 +104,7 @@ export default class FavController extends Controller {
         }
     }
     
-    @bp.get('/:id',requireLogin)
+    @bp.get('/:id',auth())
     public async detail(){
         const { ctx } = this;
         const data = await ctx.service.member.fav.detail(ctx.params.id)

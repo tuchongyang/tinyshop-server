@@ -1,6 +1,4 @@
 import { Service } from 'egg';
-import configPermission from '../../config/permission';
-
 /**
  * role Service
  */
@@ -128,7 +126,7 @@ export default class RoleService extends Service {
             item.dataValues.checked = current?true:false;
             item.dataValues.actions = item.actions.split(',').map(a=>({
                 action: a,
-                name: configPermission.actionNames[a],
+                name: ctx.helper.getActionName(a),
                 checked: current && current.actions.indexOf(a)>-1 ||false
             }));
             return item;

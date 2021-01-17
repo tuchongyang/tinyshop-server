@@ -1,6 +1,6 @@
 import { Controller } from 'egg';
 import { bp } from 'egg-blueprint'
-const requireLogin = require('../../middleware/requireLogin')()
+const auth = require('../../middleware/auth')
 /**
 * @Controller 用户地址
 */
@@ -47,14 +47,14 @@ export default class AddressController extends Controller {
      * 
      *
      */
-    @bp.get('/',requireLogin)
+    @bp.get('/',auth())
     public async index() {
         const { ctx } = this;
         let list = await ctx.service.member.address.list(ctx.query)
         ctx.success(list)
     }
     /** 不分页列表 */
-    @bp.get('/list',requireLogin)
+    @bp.get('/list',auth())
     public async list() {
         const { ctx } = this;
         let list = await ctx.service.member.address.select()
@@ -83,7 +83,7 @@ export default class AddressController extends Controller {
      *      "isDefault": false
      *  }
      */
-    @bp.post('/save',requireLogin)
+    @bp.post('/save',auth())
     public async save(){
         const { ctx } = this;
         let params = ctx.request.body;
@@ -100,7 +100,7 @@ export default class AddressController extends Controller {
      * @apiGroup 个人中心-地址管理
      * @apiParam {String} id id
     */
-   @bp.post('/setDefault/:id',requireLogin)
+   @bp.post('/setDefault/:id',auth())
     public async setDefault(){
         const { ctx } = this;
         let ret = await ctx.service.member.address.setDefault(ctx.params.id);
@@ -116,7 +116,7 @@ export default class AddressController extends Controller {
      * @apiGroup 个人中心-地址管理
      * 
      */
-    @bp.del('/:id',requireLogin)
+    @bp.del('/:id',auth())
     public async remove(){
         const { ctx } = this;
         let ret = await ctx.service.member.address.remove(ctx.params.id);
@@ -127,7 +127,7 @@ export default class AddressController extends Controller {
         }
     }
     
-    @bp.get('/:id',requireLogin)
+    @bp.get('/:id',auth())
     public async detail(){
         const { ctx } = this;
         const data = await ctx.service.member.address.detail(ctx.params.id)

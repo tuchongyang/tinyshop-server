@@ -4,6 +4,7 @@ const fs = require('mz/fs');
 const path = require('path')
 const dayjs = require('dayjs');
 const pump = require('mz-modules/pump');
+const auth = require('../middleware/auth')
 
 export default class HomeController extends Controller {
     @bp.get('/api')
@@ -11,10 +12,12 @@ export default class HomeController extends Controller {
         const { ctx } = this;
         ctx.body = "欢迎访问"
     }
-    @bp.get('/test')
+    @bp.get('/api/test',auth())
     public async test() {
         const { ctx } = this;
-        ctx.success()
+        ctx.success({
+            user: ctx.user
+        })
     }
     @bp.post('/api/file/upload')
     async fileupload() {
@@ -57,7 +60,7 @@ export default class HomeController extends Controller {
                 size: fileStat.size,
                 name: filename,
                 type: file.mime.split('/').shift(),
-                creator: ctx.session.user && ctx.session.user.id
+                creator: ctx.user && ctx.user.id
             }
             const iobj = await this.app.model.SystemFile.create(image)
             images.push(iobj)

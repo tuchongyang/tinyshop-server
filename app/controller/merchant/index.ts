@@ -1,6 +1,6 @@
 import { Controller } from 'egg';
 import { bp } from 'egg-blueprint'
-const requireLogin = require('../../middleware/requireLogin')()
+const auth = require('../../middleware/auth')()
 /**
 * @Controller 角色
 */
@@ -34,7 +34,7 @@ export default class MerchantController extends Controller {
         }
     }
     //用户用户修改商家信息
-    @bp.post('/update',requireLogin)
+    @bp.post('/update',auth())
     public async update(){
         const { ctx } = this;
         let params = ctx.request.body;

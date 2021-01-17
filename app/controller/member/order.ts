@@ -1,6 +1,6 @@
 import { Controller } from 'egg';
 import { bp } from 'egg-blueprint'
-const requireLogin = require('../../middleware/requireLogin')()
+const auth = require('../../middleware/auth')
 /**
 * @Controller 订单
 */
@@ -60,7 +60,7 @@ export default class MemberOrderController extends Controller {
         }
     }
      */
-    @bp.get('/',requireLogin)
+    @bp.get('/',auth())
     public async index() {
         const { ctx } = this;
         let list = await ctx.service.member.order.list(ctx.query)
@@ -85,7 +85,7 @@ export default class MemberOrderController extends Controller {
         ]
         }
      */
-    @bp.post('/save',requireLogin)
+    @bp.post('/save',auth())
     public async save(){
         const { ctx } = this;
         let params = ctx.request.body;
@@ -96,7 +96,7 @@ export default class MemberOrderController extends Controller {
             ctx.fail(ret.code, ret.message)
         }
     }
-    @bp.del('/:id',requireLogin)
+    @bp.del('/:id',auth())
     public async remove(){
         const { ctx } = this;
         let ret = await ctx.service.member.order.remove(ctx.params.id);
@@ -112,7 +112,7 @@ export default class MemberOrderController extends Controller {
      * @apiGroup 个人中心-我的订单
      * @apiParam {Number} id 订单ID
      */
-    @bp.post('/cancel/:id',requireLogin)
+    @bp.post('/cancel/:id',auth())
     public async cancel(){
         const { ctx } = this;
         let ret = await ctx.service.member.order.cancel(ctx.params.id);
@@ -129,7 +129,7 @@ export default class MemberOrderController extends Controller {
      * @apiParam {Number} id 订单ID
      * @apiDescription 目前未涉及在线支付，所以后台只是改了一个状态
      */
-    @bp.post('/pay/:id',requireLogin)
+    @bp.post('/pay/:id',auth())
     public async pay(){
         const { ctx } = this;
         let ret = await ctx.service.member.order.pay(ctx.params.id);
@@ -169,7 +169,7 @@ export default class MemberOrderController extends Controller {
      * 
      */
     
-    @bp.get('/:id',requireLogin)
+    @bp.get('/:id',auth())
     public async detail(){
         const { ctx } = this;
         const data = await ctx.service.member.order.detail(ctx.params.id)

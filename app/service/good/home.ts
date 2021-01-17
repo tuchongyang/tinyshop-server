@@ -130,13 +130,11 @@ export default class GoodService extends Service {
         const specs = await this.app.model.GoodSpec.findAll({
             where: {goodId: id}
         }) || []
-        console.log('this.ctx.session.user===========',this.ctx.session.user)
-        if(this.ctx.session.user){
+        if(this.ctx.user){
             const fav = await this.app.model.UserFav.findOne({
-                where: {goodId: id,userId: this.ctx.session.user.id}
+                where: {goodId: id,userId: this.ctx.user.id}
             })
             data.setDataValue('isFav',fav?true:false);
-            console.log('fav===========',fav)
         }
         data.setDataValue('images',images.map(item=>item.file));
         data.setDataValue('specs',specs);

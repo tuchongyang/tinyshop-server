@@ -18,5 +18,14 @@ module.exports = {
         }
         random_no = new Date().getTime() + random_no;
         return random_no;
+    },
+    getActionName(key){
+        const map = {
+            "detail":'详情',
+            "query":"查询",
+            "add": "添加",
+            "delete": "删除"
+        }
+        return map[key] || key
     }
 };

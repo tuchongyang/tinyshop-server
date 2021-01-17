@@ -3,9 +3,6 @@ module.exports = {
     NO_LOGIN_CODE: 401, // 未登录
     UNIQUE_CODE: 200, // 唯一性冲突
     ERROR_CODE: 500, // 失败
-    user() {
-        return this.ctx.session.user;
-    },
     
     success(data, status) {
         this.body = { status: this.SUCCESS_CODE, result:data };
@@ -20,5 +17,11 @@ module.exports = {
     notFound(msg) {
         msg = msg || 'not found';
         this.throw(404, msg);
-    }
+    },
+    get user(){
+      const token = this.request.header.authorization;
+      const tokenCache = token ? this.app.jwt.verify(token, this.app.config.secret) : undefined;
+  
+      return tokenCache && tokenCache.user || undefined;
+    },
 };

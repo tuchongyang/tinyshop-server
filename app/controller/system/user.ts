@@ -1,6 +1,6 @@
 import { Controller } from 'egg';
 import { bp } from 'egg-blueprint'
-const requireLogin = require('../../middleware/requireLogin')()
+const auth = require('../../middleware/auth')
 /**
 * @Controller 用户
 */
@@ -88,7 +88,7 @@ export default class UserController extends Controller {
      * @apiGroup 用户管理
      *
      */
-    @bp.get('/logout',requireLogin)
+    @bp.get('/logout',auth())
     public async logout(){
         const { ctx } = this;
         ctx.session=null
@@ -118,7 +118,7 @@ export default class UserController extends Controller {
      * }
      *
      */
-    @bp.post('/update',requireLogin)
+    @bp.post('/update',auth())
     public async update(){
         const { ctx } = this;
         let params = ctx.request.body;
@@ -129,7 +129,7 @@ export default class UserController extends Controller {
             ctx.fail(ret.code, ret.message)
         }
     }
-    @bp.del('/:id',requireLogin)
+    @bp.del('/:id',auth())
     public async remove(){
         const { ctx } = this;
         let ret = await ctx.service.system.user.remove(ctx.params.id);
@@ -198,10 +198,10 @@ export default class UserController extends Controller {
     }
      *
      */
-    @bp.get('/info',requireLogin)
+    @bp.get('/info',auth())
     public async info(){
         const { ctx } = this;
-        let user = ctx.session.user;
+        let user = ctx.user;
         const userInfo = await ctx.service.system.user.getUserInfo({id: user.id})
         return ctx.success(userInfo);
     }
@@ -211,10 +211,10 @@ export default class UserController extends Controller {
         const userInfo = await ctx.service.system.user.detail(ctx.params.id)
         return ctx.success(userInfo);
     }
-    @bp.get('/menu',requireLogin)
+    @bp.get('/menu',auth())
     public async menu(){
         const { ctx } = this;
-        let user = ctx.session.user;
+        let user = ctx.user;
         const list = await ctx.service.system.user.getMenuTree(user.roleId)
         ctx.success(list);
     }
