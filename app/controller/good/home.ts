@@ -102,7 +102,7 @@ export default class GoodController extends Controller {
     }
 
 
-    @bp.post('/save')
+    @bp.post('/save',auth())
     public async save(){
         const { ctx } = this;
         let params = ctx.request.body;
@@ -113,7 +113,7 @@ export default class GoodController extends Controller {
             ctx.fail(ret.code, ret.message)
         }
     }
-    @bp.del('/:id')
+    @bp.del('/:id',auth())
     public async remove(){
         const { ctx } = this;
         let ret = await ctx.service.good.home.remove(ctx.params.id);

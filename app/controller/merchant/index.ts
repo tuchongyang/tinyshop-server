@@ -1,6 +1,6 @@
 import { Controller } from 'egg';
 import { bp } from 'egg-blueprint'
-const auth = require('../../middleware/auth')()
+const auth = require('../../middleware/auth')
 /**
 * @Controller 角色
 */
