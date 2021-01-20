@@ -19,6 +19,14 @@ export default class HomeController extends Controller {
             user: ctx.user
         })
     }
+    /** 分页列表 */
+    /**
+     * @api {post} /api/file/upload 文件上传
+     * @apiName fileUpload
+     * @apiGroup 系统管理
+     * 
+     **/
+     
     @bp.post('/api/file/upload')
     async fileupload() {
         const { ctx } = this;
