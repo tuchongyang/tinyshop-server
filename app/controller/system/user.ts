@@ -4,11 +4,11 @@ const auth = require('../../middleware/auth')
 /**
 * @Controller 用户
 */
-bp.prefix('/api/user', 'UserController')
+bp.prefix('/system/user', 'UserController')
 export default class UserController extends Controller {
     /** 分页列表 */
     /**
-     * @api {get} /api/user 用户分页列表
+     * @api {get} /api/system/user 用户分页列表
      * @apiName GetUser
      * @apiGroup 用户管理
      *
@@ -60,7 +60,7 @@ export default class UserController extends Controller {
         ctx.success(list)
     }
     /**
-     * @api {post} /api/user/login 登录
+     * @api {post} /api/system/user/login 登录
      * @apiName login
      * @apiGroup 用户管理
      *
@@ -76,14 +76,15 @@ export default class UserController extends Controller {
         const { ctx } = this;
         let {username,password} = ctx.request.body;
         let {code,message,token} = await ctx.service.system.user.login({username,password})
+        console.log('message==================',message)
         if(code==0){
             ctx.success(token)
         }else{
-            ctx.fail(code,message);
+            ctx.fail(message);
         }
     }
     /**
-     * @api {get} /api/user/logout 退出登录
+     * @api {get} /api/system/user/logout 退出登录
      * @apiName logout
      * @apiGroup 用户管理
      *
@@ -103,13 +104,13 @@ export default class UserController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     
     
     /**
-     * @api {post} /api/user/update 修改用户信息
+     * @api {post} /api/system/user/update 修改用户信息
      * @apiName userUpdate
      * @apiGroup 用户管理
      * @apiParamExample {json} 请求示例
@@ -126,7 +127,7 @@ export default class UserController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     @bp.del('/:id',auth())
@@ -136,12 +137,12 @@ export default class UserController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     
     /**
-     * @api {get} /api/user/info 获取用户信息
+     * @api {get} /api/system/user/info 获取用户信息
      * @apiName userInfo
      * @apiGroup 用户管理
      * @apiSuccessExample 成功返回:

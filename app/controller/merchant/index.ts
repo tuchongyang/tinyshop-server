@@ -4,7 +4,7 @@ const auth = require('../../middleware/auth')
 /**
 * @Controller 角色
 */
-bp.prefix('/api/merchant', 'MerchantController')
+bp.prefix('/merchant', 'MerchantController')
 export default class MerchantController extends Controller {
     /** 分页列表 */
     @bp.get('/')
@@ -30,7 +30,7 @@ export default class MerchantController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     //用户用户修改商家信息
@@ -42,7 +42,7 @@ export default class MerchantController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     @bp.del('/:id')
@@ -52,7 +52,7 @@ export default class MerchantController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     

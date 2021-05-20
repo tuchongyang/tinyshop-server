@@ -4,14 +4,14 @@ module.exports = {
     UNIQUE_CODE: 200, // 唯一性冲突
     ERROR_CODE: 500, // 失败
     
-    success(data, status) {
+    success(data, status=200) {
         this.body = { status: this.SUCCESS_CODE, result:data };
-        this.status = status || 200;
+        this.status = status;
     },
     
-    fail(status, message,data) {
-        this.body = { status, message, result:data };
-        this.status = status||400;
+    fail(message,status=400,data) {
+        this.body = { message,status, result:data };
+        this.status = 200;
     },
     
     notFound(msg) {
@@ -20,8 +20,12 @@ module.exports = {
     },
     get user(){
       const token = this.request.header.authorization;
-      const tokenCache = token ? this.app.jwt.verify(token, this.app.config.secret) : undefined;
-  
+      let tokenCache
+      try{
+      tokenCache = token ? this.app.jwt.verify(token, this.app.config.secret) : undefined;
+    }catch(e){
+
+    }
       return tokenCache && tokenCache.user || undefined;
     },
 };

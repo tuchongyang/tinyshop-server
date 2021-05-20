@@ -3,7 +3,7 @@ import { bp } from 'egg-blueprint'
 /**
 * @Controller 菜单
 */
-bp.prefix('/api/menu', 'MenuController')
+bp.prefix('/system/menu', 'MenuController')
 export default class MenuController extends Controller {
     /** 分页列表 */
     @bp.get('/')
@@ -36,7 +36,7 @@ export default class MenuController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     @bp.del('/:id')
@@ -46,7 +46,7 @@ export default class MenuController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     

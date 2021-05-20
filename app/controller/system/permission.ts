@@ -3,7 +3,7 @@ import { bp } from 'egg-blueprint'
 /**
 * @Controller 角色
 */
-bp.prefix('/api/permission', 'PermissionController')
+bp.prefix('/system/permission', 'PermissionController')
 export default class PermissionController extends Controller {
     /** 分页列表 */
     @bp.get('/')
@@ -28,7 +28,7 @@ export default class PermissionController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     @bp.del('/:id')
@@ -38,7 +38,7 @@ export default class PermissionController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     

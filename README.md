@@ -1,12 +1,15 @@
 # tinyshop-server
 ### 基于egg.js+jwt+mysql编写的开箱即用的权限管理后台+商城管理后台
 
-### 后台服务:[https://github.com/tuchongyang/tinyshop-server](https://github.com/tuchongyang/tinyshop-server)
+#### 前言
+本项目是基于eggjs开发的一套商城系统，包含服务端、后台管理和移动端。单商户、多商户同时支持。并包含一套细粒度的多角色多权限管理系统。
 
-### 后台管理：[https://github.com/tuchongyang/tinyshop-admin](https://github.com/tuchongyang/tinyshop-admin)
-### 商城前端：[https://github.com/Cris0525/tinyshop-uniapp](https://github.com/Cris0525/tinyshop-uniapp)
+#### 快速开始
+1、下载代码 `git clone https://github.com/tuchongyang/tinyshop-server.git`
+2、安装依赖 `npm install`
+3、配置config文件 `/config/config.local.js`
+4、导入数据库文件 `tinyshop.sql`
 
-### api接口文档: [http://tinyshop.tucy.top/doc](http://tinyshop.tucy.top/doc)
 
 
 👤 **tuchongyang**
@@ -16,7 +19,7 @@
 * QQ群: 145679486
 
 ### 已实现功能
-#### 使用之前请先了解`egg.js`，然后把`/server/config/config.local.js`数据库配置成自己的，只要手动创建数据库就行，数据表在系统运行时会自动创建,并且自动创建超级管理员账号,为了系统稳定性该账号不可以被删除,不可以被降级权限
+#### 使用之前请先了解`egg.js`，然后把`/config/config.local.js`数据库配置成自己的，只要手动创建数据库就行，
 
 #### 系统管理员
 - [x] 角色管理，（增加，删除，修改，角色菜单管理，角色权限管理）

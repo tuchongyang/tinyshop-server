@@ -103,7 +103,6 @@ export default class UserService extends Service {
                     * {expiresIn:'24h'} 过期时间
                     */
                     const token = this.app.jwt.sign({ user: data }, this.config.jwt.secret,{expiresIn:'24h'});
-                    ctx.user = data
                     results = {  code: 0, message: "登录成功",token }
                 }).catch(err => {
                     results = { code: 400, message: err, token: '' }

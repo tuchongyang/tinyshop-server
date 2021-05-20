@@ -3,15 +3,15 @@
 
 import 'egg';
 import ExportHome from '../../../app/controller/home';
-import ExportGoodCategory from '../../../app/controller/good/category';
-import ExportGoodHome from '../../../app/controller/good/home';
-import ExportGoodOrder from '../../../app/controller/good/order';
 import ExportLogMessage from '../../../app/controller/log/message';
 import ExportMemberAddress from '../../../app/controller/member/address';
 import ExportMemberFav from '../../../app/controller/member/fav';
 import ExportMemberOrder from '../../../app/controller/member/order';
 import ExportMerchantIndex from '../../../app/controller/merchant/index';
 import ExportShopBanner from '../../../app/controller/shop/banner';
+import ExportShopCategory from '../../../app/controller/shop/category';
+import ExportShopGood from '../../../app/controller/shop/good';
+import ExportShopOrder from '../../../app/controller/shop/order';
 import ExportSystemFile from '../../../app/controller/system/file';
 import ExportSystemMenu from '../../../app/controller/system/menu';
 import ExportSystemPermission from '../../../app/controller/system/permission';
@@ -22,11 +22,6 @@ import ExportSystemUser from '../../../app/controller/system/user';
 declare module 'egg' {
   interface IController {
     home: ExportHome;
-    good: {
-      category: ExportGoodCategory;
-      home: ExportGoodHome;
-      order: ExportGoodOrder;
-    }
     log: {
       message: ExportLogMessage;
     }
@@ -40,6 +35,9 @@ declare module 'egg' {
     }
     shop: {
       banner: ExportShopBanner;
+      category: ExportShopCategory;
+      good: ExportShopGood;
+      order: ExportShopOrder;
     }
     system: {
       file: ExportSystemFile;

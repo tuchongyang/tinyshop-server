@@ -4,7 +4,7 @@ const auth = require('../../middleware/auth')
 /**
 * @Controller 角色
 */
-bp.prefix('/api/role', 'RoleController')
+bp.prefix('/system/role', 'RoleController')
 export default class RoleController extends Controller {
     /** 分页列表 */
     @bp.get('/',auth('system_role','query'))
@@ -30,7 +30,7 @@ export default class RoleController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     @bp.del('/:id')
@@ -40,7 +40,7 @@ export default class RoleController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     
@@ -66,7 +66,7 @@ export default class RoleController extends Controller {
         await ctx.service.system.role.saveMenuTree(ctx.params.id,ctx.request.body).then(()=>{
             ctx.success()
         }).catch(err=>{
-            ctx.fail(400,err.message)
+            ctx.fail(err.message)
         })
     }
     /**获取角色权限 */
@@ -83,7 +83,7 @@ export default class RoleController extends Controller {
         await ctx.service.system.role.savePermission(ctx.params.id,ctx.request.body).then(()=>{
             ctx.success()
         }).catch(err=>{
-            ctx.fail(400,err.message)
+            ctx.fail(err.message)
         })
     }
 

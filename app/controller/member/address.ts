@@ -4,7 +4,7 @@ const auth = require('../../middleware/auth')
 /**
 * @Controller 用户地址
 */
-bp.prefix('/api/member/address', 'AddressController')
+bp.prefix('/member/address', 'AddressController')
 export default class AddressController extends Controller {
     /** 分页列表 */
     /**
@@ -91,7 +91,7 @@ export default class AddressController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     /**
@@ -107,7 +107,7 @@ export default class AddressController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     /**
@@ -123,7 +123,7 @@ export default class AddressController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     

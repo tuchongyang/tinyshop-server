@@ -4,7 +4,7 @@ const auth = require('../../middleware/auth')
 /**
 * @Controller 订单
 */
-bp.prefix('/api/member/order', 'MemberOrderController')
+bp.prefix('/member/order', 'MemberOrderController')
 export default class MemberOrderController extends Controller {
     /** 分页列表 */
     /**
@@ -93,7 +93,7 @@ export default class MemberOrderController extends Controller {
         if(ret.code==0){
             ctx.success(ret)
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     @bp.del('/:id',auth())
@@ -103,7 +103,7 @@ export default class MemberOrderController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     /**
@@ -119,7 +119,7 @@ export default class MemberOrderController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     /**
@@ -136,7 +136,7 @@ export default class MemberOrderController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     /**

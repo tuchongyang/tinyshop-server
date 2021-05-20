@@ -4,11 +4,11 @@ const auth = require('../../middleware/auth')
 /**
 * @Controller 角色
 */
-bp.prefix('/api/good', 'GoodController')
+bp.prefix('/shop/good', 'GoodController')
 export default class GoodController extends Controller {
     /** 分页列表 */
     /**
-     * @api {get} /api/good 商品分页列表
+     * @api {get} /api/shop/good 商品分页列表
      * @apiName goodList
      * @apiGroup 商品管理
      *
@@ -90,14 +90,14 @@ export default class GoodController extends Controller {
     @bp.get('/')
     public async index() {
         const { ctx } = this;
-        let list = await ctx.service.good.home.list(ctx.query)
+        let list = await ctx.service.shop.good.list(ctx.query)
         ctx.success(list)
     }
     /** 不分页列表 */
     @bp.get('/list')
     public async list() {
         const { ctx } = this;
-        let list = await ctx.service.good.home.select()
+        let list = await ctx.service.shop.good.select()
         ctx.success(list)
     }
 
@@ -106,28 +106,28 @@ export default class GoodController extends Controller {
     public async save(){
         const { ctx } = this;
         let params = ctx.request.body;
-        let ret = await ctx.service.good.home.save(params);
+        let ret = await ctx.service.shop.good.save(params);
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     @bp.del('/:id',auth())
     public async remove(){
         const { ctx } = this;
-        let ret = await ctx.service.good.home.remove(ctx.params.id);
+        let ret = await ctx.service.shop.good.remove(ctx.params.id);
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     
     @bp.get('/:id')
     public async detail(){
         const { ctx } = this;
-        const data = await ctx.service.good.home.detail(ctx.params.id)
+        const data = await ctx.service.shop.good.detail(ctx.params.id)
         
         ctx.success(data)
        

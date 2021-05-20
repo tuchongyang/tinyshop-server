@@ -3,7 +3,7 @@ import { bp } from 'egg-blueprint'
 /**
 * @Controller 消息日志
 */
-bp.prefix('/api/message', 'MessageController')
+bp.prefix('/message', 'MessageController')
 export default class MessageController extends Controller {
     /** 分页列表 */
     @bp.get('/')
@@ -21,7 +21,7 @@ export default class MessageController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     @bp.del('/:id')
@@ -31,7 +31,7 @@ export default class MessageController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     

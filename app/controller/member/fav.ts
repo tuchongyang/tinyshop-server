@@ -4,7 +4,7 @@ const auth = require('../../middleware/auth')
 /**
 * @Controller 用户地址
 */
-bp.prefix('/api/member/fav', 'FavController')
+bp.prefix('/member/fav', 'FavController')
 export default class FavController extends Controller {
     /**
      * @api {get} /api/member/fav 我的收藏列表
@@ -79,7 +79,7 @@ export default class FavController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     /**
@@ -100,7 +100,7 @@ export default class FavController extends Controller {
         if(ret.code==0){
             ctx.success()
         }else{
-            ctx.fail(ret.code, ret.message)
+            ctx.fail(ret.message,ret.code)
         }
     }
     
