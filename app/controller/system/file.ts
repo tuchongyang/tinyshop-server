@@ -62,7 +62,7 @@ export default class FileController extends Controller {
      * 
      **/
      
-     @bp.post('/file/upload')
+     @bp.post('/upload')
      async fileupload() {
          const { ctx } = this;
          const files = ctx.request.files;
