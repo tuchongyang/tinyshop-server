@@ -1,4 +1,9 @@
 # tinyshop-server
+
+![](https://img.shields.io/github/package-json/v/tuchongyang/tinyshop-server)
+![](https://img.shields.io/github/package-json/dependency-version/tuchongyang/tinyshop-server/egg)
+![](https://img.shields.io/node/v/egg)
+
 ### 基于egg.js+jwt+mysql编写的开箱即用的权限管理后台+商城管理后台
 
 #### 前言
