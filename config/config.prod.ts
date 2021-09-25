@@ -7,7 +7,7 @@ export default () => {
         host: "localhost",// host
         port: 3306,// 端口号
         username: "root",// 用户名
-        password: "root",// 密码
+        password: "Root123.",// 密码
         database: "tinyshop"// 数据库名
     };
     return config;

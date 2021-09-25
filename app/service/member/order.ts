@@ -79,9 +79,9 @@ export default class OrderService extends Service {
         })
         let orderModel = {
             addressId: options.addressId,
-            address: [addressModel.province,addressModel.city,addressModel.district,addressModel.township,addressModel.place].filter(a=>a).join(''),
-            linkMan: addressModel.linkMan,
-            linkPhone: addressModel.linkPhone,
+            address: [addressModel.province,addressModel.city,addressModel.county,addressModel.township,addressModel.addressDetail].filter(a=>a).join(''),
+            linkMan: addressModel.name,
+            linkPhone: addressModel.tel,
             goodsTotalQty: options.goodList.length,
             totalAmount: goodList.reduce((next,cur)=>next+cur.spec.salePrice*cur.qty,0),
             merchantId: mechantModel.id,

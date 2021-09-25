@@ -28,14 +28,16 @@ export default class AddressController extends Controller {
                         "id": 4,
                         "province": "湖北省",
                         "city": "武汉市",
-                        "district": "江夏区",
+                        "county": "江夏区",
                         "township": null,
-                        "place": "高新五路",
-                        "linkMan": "涂重阳",
-                        "linkPhone": "18707133663",
+                        "addressDetail": "高新五路",
+                        "name": "涂重阳",
+                        "tel": "18707133663",
                         "isDefault": false,
                         "longitude": null,
                         "latitude": null,
+                        "postalCode": null,
+                        "areaCode": null,
                         "userId": 1,
                         "createdAt": "2021-01-16 14:07:17",
                         "updatedAt": "2021-01-16 14:07:17"
@@ -66,20 +68,22 @@ export default class AddressController extends Controller {
      * @apiName userAddressSave
      * @apiGroup 个人中心-地址管理
      * @apiDescription 如果是修改，则在body数据中传id
-     * @apiParam {String} linkMan 收件人
-     * @apiParam {String} linkPhone 收件人电话
+     * @apiParam {String} name 收件人
+     * @apiParam {String} tel 收件人电话
      * @apiParam {String} province 省
      * @apiParam {String} city 市
-     * @apiParam {String} district 区
-     * @apiParam {String} place 详细地址
+     * @apiParam {String} county 区
+     * @apiParam {String} addressDetail 详细地址
+     * @apiParam {String} areaCode 区域编码，前端插件需要
      * @apiParamExample {json} 请求示例:
      * {
-     *      "linkMan": "涂重阳",
-     *      "linkPhone": "18707133663",
+     *      "name": "涂重阳",
+     *      "tel": "18707133663",
      *      "province": "湖北省",
      *      "city": "武汉市",
-     *      "district": "江夏区",
-     *      "place": "高新五路",
+     *      "county": "江夏区",
+     *      "addressDetail": "高新五路",
+     *      "areaCode": 1100013,
      *      "isDefault": false
      *  }
      */
