@@ -19,7 +19,8 @@ export default class OrderService extends Service {
             }:'',
             orderNo:options.orderNo?{
                 [Op.substring]:'%'+options.orderNo
-            }:''
+            }:'',
+            userId: this.ctx.user
         };
         for(const i in where){
             if(!where[i]) delete where[i]
@@ -30,8 +31,10 @@ export default class OrderService extends Service {
             include:[
                 { model: this.app.model.GoodOrderLine,as:'goodList'}
             ],
+            order: [ ["createdAt", 'DESC']],
             where:where
         })
+        console.log('list=========================limit:',+pageSize,'offset:',pageSize * (page-1),where)
         return list;
     }
     
@@ -87,8 +90,8 @@ export default class OrderService extends Service {
             merchantId: mechantModel.id,
             shopName: mechantModel.name,
             remark: options.remark,
-            userId: ctx.user.id,
-            userName: ctx.user.name,
+            userId: ctx.user,
+            userName: "",
             orderNo: ctx.helper.randomNo(3)
         }
         const order = await ctx.model.GoodOrder['create'](orderModel)

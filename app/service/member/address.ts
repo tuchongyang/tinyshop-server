@@ -12,7 +12,7 @@ export default class AddressService extends Service {
     public async list(options) {
         const { ctx } = this
         let {page = 1, pageSize = this.config.pageSize} = options
-        const where = {userId: ctx.user.id};
+        const where = {userId: ctx.user};
         if(typeof options.isDefault !== 'undefined'){
             where['isDefault']=options.isDefault?true:false
         }
@@ -39,11 +39,11 @@ export default class AddressService extends Service {
     public async save(options: any) {
         const { ctx } = this
         let results = { code: 400, message: "失败", }
-        options.userId = ctx.user.id;
+        options.userId = ctx.user;
         
         if(options.isDefault){//先将其它地址默认地址去掉
             await ctx.model.UserAddress.update({isDefault: false},{
-                where:{userId: ctx.user.id}
+                where:{userId: ctx.user}
             })
         }
         await ctx.model.UserAddress.upsert(options).then(() => {

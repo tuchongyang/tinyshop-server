@@ -103,7 +103,7 @@ export default class FileController extends Controller {
           size: fileStat.size,
           name: filename,
           type: file.mime.split("/").shift(),
-          creator: ctx.user && ctx.user.id,
+          creator: ctx.user,
         };
         const iobj = await this.app.model.SystemFile.create(image);
         images.push(iobj);

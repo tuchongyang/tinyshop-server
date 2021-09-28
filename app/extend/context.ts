@@ -18,6 +18,7 @@ module.exports = {
         msg = msg || 'not found';
         this.throw(404, msg);
     },
+    //实际存储的是userId
     get user(){
       const token = this.request.header.authorization;
       let tokenCache

@@ -12,7 +12,7 @@ export default class FavService extends Service {
     public async list(options) {
         const { ctx } = this
         let {page = 1, pageSize = this.config.pageSize} = options
-        const where = {userId: ctx.user.id};
+        const where = {userId: ctx.user};
         let list = await this.app.model.UserFav.findAndCountAll({
             limit: +pageSize,
             offset: pageSize * (page-1),
@@ -39,7 +39,7 @@ export default class FavService extends Service {
     public async save(options: any) {
         const { ctx } = this
         let results = { code: 400, message: "失败", }
-        options.userId = ctx.user.id;
+        options.userId = ctx.user;
         
         await ctx.model.UserFav.upsert(options).then(() => {
             results = { code: 0, message: "添加成功", }
@@ -58,7 +58,7 @@ export default class FavService extends Service {
     public async cancel(options:any){
         const { ctx } = this
         let results
-        options.userId = ctx.user.id;
+        options.userId = ctx.user;
         await this.ctx.model.UserFav.destroy({ where: options}).then(() => {
             results = { code: 0, message: "删除成功", }
         }).catch(error => {

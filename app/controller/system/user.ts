@@ -203,7 +203,7 @@ export default class UserController extends Controller {
     public async info(){
         const { ctx } = this;
         let user = ctx.user;
-        const userInfo = await ctx.service.system.user.getUserInfo({id: user.id})
+        const userInfo = await ctx.service.system.user.getUserInfo({id: user})
         return ctx.success(userInfo);
     }
     @bp.get('/detail/:id')
@@ -216,7 +216,8 @@ export default class UserController extends Controller {
     public async menu(){
         const { ctx } = this;
         let user = ctx.user;
-        const list = await ctx.service.system.user.getMenuTree(user.roleId)
+        const useObj = await ctx.service.system.user.detail(user)
+        const list = await ctx.service.system.user.getMenuTree(useObj.roleId)
         ctx.success(list);
     }
 }

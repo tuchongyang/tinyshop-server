@@ -132,7 +132,7 @@ export default class GoodService extends Service {
         }) || []
         if(this.ctx.user){
             const fav = await this.app.model.UserFav.findOne({
-                where: {goodId: id,userId: this.ctx.user.id}
+                where: {goodId: id,userId: this.ctx.user}
             })
             data.setDataValue('isFav',fav?true:false);
         }
