@@ -9,19 +9,24 @@
 #### 前言
 本项目是基于eggjs开发的一套商城系统，包含服务端、后台管理和移动端。单商户、多商户同时支持。并包含一套细粒度的多角色多权限管理系统。
 
+#### 介绍
+服务端：eggjs+mysql+jwt  (本仓库) [接口地址](http://tinyshop.tucy.top/api)
+
+管理后台: vue2+element-ui  [仓库地址](https://github.com/tuchongyang/tinyshop-admin)   [预览地址](http://tinyshop.tucy.top/admin)
+
+移动商城：vue3+vant+vue全家桶  [仓库地址](https://github.com/tuchongyang/tinyshop-vue)   [预览地址](http://tinyshop.tucy.top/)
+
+
 #### 快速开始
 1、下载代码 `git clone https://github.com/tuchongyang/tinyshop-server.git`
+
 2、安装依赖 `npm install`
+
 3、配置config文件 `/config/config.local.js`
+
 4、导入数据库文件 `tinyshop.sql`
 
 
-
-👤 **tuchongyang**
-
-* Github: [@tuchongyang](https://github.com/tuchongyang)
-* QQ: 779311998
-* QQ群: 145679486
 
 ### 已实现功能
 #### 使用之前请先了解`egg.js`，然后把`/config/config.local.js`数据库配置成自己的，只要手动创建数据库就行，
@@ -78,6 +83,14 @@
 ![权限管理](http://www.tucy.top/screenshort/tinyshop/admin8.jpg)
 ![商家管理](http://www.tucy.top/screenshort/tinyshop/admin9.jpg)
 
+
+
+👤 **tuchongyang**
+
+* Github: [@tuchongyang](https://github.com/tuchongyang)
+* QQ: 779311998
+* QQ群: 145679486
+* 
 ## 结语
 如果这个项目对你有帮助的话，请给个星点个star
 
