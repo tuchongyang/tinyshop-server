@@ -11,21 +11,21 @@ const auth = require('../../middleware/auth')
 bp.prefix("/system/file", "FileController");
 export default class FileController extends Controller {
   /** 分页列表 */
-  @bp.get("/", auth('file', 'list'))
+  @bp.get("/", auth('system-file', 'list'))
   public async index() {
     const { ctx } = this;
     let list = await ctx.service.system.file.list(ctx.query);
     ctx.success(list);
   }
   /** 不分页列表 */
-  @bp.get("/list", auth('file', 'list'))
+  @bp.get("/list", auth('system-file', 'list'))
   public async list() {
     const { ctx } = this;
     let list = await ctx.service.system.file.select();
     ctx.success(list);
   }
 
-  @bp.post("/save")
+  @bp.post("/save", auth('system-file', 'add'))
   public async save() {
     const { ctx } = this;
     let params = ctx.request.body;
@@ -36,7 +36,7 @@ export default class FileController extends Controller {
       ctx.fail(ret.message, ret.code);
     }
   }
-  @bp.del("/:id")
+  @bp.del("/:id", auth('system-file', 'delete'))
   public async remove() {
     const { ctx } = this;
     let ret = await ctx.service.system.file.remove(ctx.params.id);
@@ -47,7 +47,7 @@ export default class FileController extends Controller {
     }
   }
 
-  @bp.get("/:id")
+  @bp.get("/:id", auth('system-file', 'detail'))
   public async detail() {
     const { ctx } = this;
     const data = await ctx.service.system.file.detail(ctx.params.id);
@@ -61,7 +61,7 @@ export default class FileController extends Controller {
    *
    **/
 
-  @bp.post("/upload")
+  @bp.post("/upload", auth())
   async fileupload() {
     const { ctx } = this;
     const files = ctx.request.files;

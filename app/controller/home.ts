@@ -1,6 +1,7 @@
 import { Controller } from 'egg';
 import { bp } from 'egg-blueprint';
 
+const crypto = require('crypto');
 const auth = require('../middleware/auth');
 
 export default class HomeController extends Controller {
@@ -46,15 +47,16 @@ export default class HomeController extends Controller {
     ];
     // 权限
     const permissions = [
-      { id: 'system-user', name: '用户管理', actions: 'query,add,delete,detail' },
-      { id: 'system-menu', name: '菜单管理', actions: 'query,add,delete,detail' },
-      { id: 'system-role', name: '角色管理', actions: 'query,add,delete,detail' },
-      { id: 'system-file', name: '文件管理', actions: 'query,add,delete,detail' },
-      { id: 'system-log', name: '日志管理', actions: 'query' },
-      { id: 'merchant', name: '商家管理', actions: 'query,add,delete,detail' },
-      { id: 'good', name: '商品管理', actions: 'query,add,delete,detail' },
-      { id: 'goodCategory', name: '商品分类管理', actions: 'query,add,delete,detail' },
-      { id: 'order', name: '订单', actions: 'query,add,delete,detail' },
+      { id: 'system-user', name: '用户管理', actions: 'list,add,delete,detail' },
+      { id: 'system-menu', name: '菜单管理', actions: 'list,add,delete,detail,tree' },
+      { id: 'system-role', name: '角色管理', actions: 'list,add,delete,detail,menuSave,permissionSave' },
+      { id: 'system-file', name: '文件管理', actions: 'list,add,delete,detail' },
+      { id: 'system-log', name: '日志管理', actions: 'list' },
+      { id: 'merchant', name: '商家管理', actions: 'list,add,delete,detail,update' },
+      { id: 'good', name: '商品管理', actions: 'list,add,delete,detail' },
+      { id: 'goodCategory', name: '商品分类管理', actions: 'list,add,delete,detail' },
+      { id: 'order', name: '订单', actions: 'list,add,delete,detail' },
+      { id: 'banner', name: '轮播图', actions: 'list,add,delete,detail' },
     ];
     // 角色菜单
     const roleMenus = [
@@ -79,15 +81,17 @@ export default class HomeController extends Controller {
     ];
     // 角色权限
     const rolePermissions = [
-      { roleId: 1, permissionId: 'system-user', actions: 'query,add,delete,detail' },
-      { roleId: 1, permissionId: 'system-menu', actions: 'query,add,delete,detail' },
-      { roleId: 1, permissionId: 'system-role', actions: 'query,add,delete,detail' },
-      { roleId: 1, permissionId: 'system-file', actions: 'query,add,delete,detail' },
-      { roleId: 1, permissionId: 'system-log', actions: 'query' },
-      { roleId: 1, permissionId: 'merchant', actions: 'query,add,delete,detail' },
-      { roleId: 2, permissionId: 'good', actions: 'query,add,delete,detail' },
-      { roleId: 2, permissionId: 'goodCategory', actions: 'query,add,delete,detail' },
-      { roleId: 2, permissionId: 'order', actions: 'query,add,delete,detail' },
+      { roleId: 1, permissionId: 'system-user', actions: 'list,add,delete,detail' },
+      { roleId: 1, permissionId: 'system-menu', actions: 'list,add,delete,detail' },
+      { roleId: 1, permissionId: 'system-role', actions: 'list,add,delete,detail,menuSave,permissionSave' },
+      { roleId: 1, permissionId: 'system-file', actions: 'list,add,delete,detail' },
+      { roleId: 1, permissionId: 'system-log', actions: 'list' },
+      { roleId: 1, permissionId: 'merchant', actions: 'list,add,delete,detail,update' },
+      { roleId: 2, permissionId: 'good', actions: 'list,add,delete,detail' },
+      { roleId: 2, permissionId: 'goodCategory', actions: 'list,add,delete,detail' },
+      { roleId: 1, permissionId: 'merchant', actions: 'detail,update' },
+      { roleId: 2, permissionId: 'order', actions: 'list,add,delete,detail' },
+      { roleId: 2, permissionId: 'banner', actions: 'list,add,delete,detail' },
     ];
     const users = [{
       name: '超级管理员',
@@ -95,11 +99,20 @@ export default class HomeController extends Controller {
       password: '123456',
       type: 1,
       roleId: 1,
-    }];
+    },{
+      name: '商家',
+      username: 'tcy',
+      password: '123456',
+      type: 2,
+      roleId: 2,
+    }].map(a=>{
+      a.password = crypto.createHash('md5').update(a.password).digest('hex');
+      return a
+    });
 
     // 用户
     await this.app.model.SystemUser.truncate({ where: {} });
-    await this.ctx.service.system.user.save(users[0]);
+    await this.app.model.SystemUser.bulkCreate(users);
 
     // 菜单
     await this.app.model.SystemMenu.truncate({ where: {} });

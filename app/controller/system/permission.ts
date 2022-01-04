@@ -1,7 +1,7 @@
 import { Controller } from 'egg';
 import { bp } from 'egg-blueprint'
 /**
-* @Controller 角色
+* @Controller 权限
 */
 bp.prefix('/system/permission', 'PermissionController')
 export default class PermissionController extends Controller {

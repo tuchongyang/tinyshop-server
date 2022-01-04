@@ -61,9 +61,10 @@ export default class UserService extends Service {
     /**更新 */
     public async update(options: any) {
         const { ctx } = this
+        const {id, ...opts} = options
         let results = { code: 500, message: "失败", }
-        await ctx.model.SystemUser.update(options,{
-            where:{id: ctx.user}
+        await ctx.model.SystemUser.update(opts,{
+            where:{id: id}
         }).then(() => {
             results = { code: 0, message: "更新成功", }
         }).catch(err => {
@@ -164,7 +165,10 @@ export default class UserService extends Service {
             where: {roleId: roleId},
             include:[
                 {model: this.app.model.SystemMenu,as: 'menu'}
-            ]
+            ],
+            attributes:{
+                exclude:['createdAt','updateAt','status']
+            }
         })
         list = list.map(item=>item.menu);
         let result:Array<any> = [];

@@ -53,7 +53,7 @@ export default class UserController extends Controller {
       }
     *
     */
-  @bp.get('/', auth('system-user', 'query'))
+  @bp.get('/', auth('system-user', 'list'))
   public async index() {
     const { ctx } = this;
     const list = await ctx.service.system.user.list(ctx.query);
@@ -120,6 +120,17 @@ export default class UserController extends Controller {
     const { ctx } = this;
     const params = ctx.request.body;
     const ret = await ctx.service.system.user.update(params);
+    if (ret.code === 0) {
+      ctx.success();
+    } else {
+      ctx.fail(ret.message, ret.code);
+    }
+  }
+  @bp.post('/modify/:id', auth('system-user', 'update'))
+  public async modify() {
+    const { ctx } = this;
+    const params = ctx.request.body;
+    const ret = await ctx.service.system.user.update({id: ctx.params.id, params});
     if (ret.code === 0) {
       ctx.success();
     } else {
@@ -200,7 +211,7 @@ export default class UserController extends Controller {
     const userInfo = await ctx.service.system.user.getUserInfo({ id: ctx.user });
     return ctx.success(userInfo);
   }
-  @bp.get('/detail/:id')
+  @bp.get('/detail/:id', auth('system-user', 'detail'))
   public async detail() {
     const { ctx } = this;
     const userInfo = await ctx.service.system.user.detail(ctx.params.id);

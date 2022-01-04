@@ -4,18 +4,53 @@ const auth = require('../../middleware/auth')
 /**
 * @Controller 角色
 */
-bp.prefix('/shop/banner', 'BannerController')
+bp.prefix('/store/banner', 'BannerController')
 export default class BannerController extends Controller {
     /** 分页列表 */
-    @bp.get('/', auth('banner', 'list'))
+    
+    @bp.get('/')
     public async index() {
         const { ctx } = this;
         let list = await ctx.service.shop.banner.list(ctx.query)
         ctx.success(list)
     }
     /** 不分页列表 */
-    
-    @bp.get('/list', auth('banner', 'list'))
+    /**
+     * @api {get} /api/store/banner/list 首页广告图列表
+     * @apiName shopBanner
+     * @apiGroup 店铺-广告图
+     * @apiParam {Number} merchantId 店铺ID
+     * @apiSuccessExample 成功返回:
+     * {
+        "status": 200,
+        "result": [
+            {
+                "id": 4,
+                "url": "",
+                "sort": 8,
+                "merchantId": 1,
+                "status": 1,
+                "image": {
+                    "id": 84,
+                    "url": "/public/uploads/2021/01/16/1610804243994930.8798108642115.jpg"
+                }
+            },
+            {
+                "id": 3,
+                "url": "",
+                "sort": 5,
+                "merchantId": 1,
+                "status": 1,
+                "image": {
+                    "id": 83,
+                    "url": "/public/uploads/2021/01/16/1610804233531567.5261065878891.jpg"
+                }
+            }
+        ]
+    }
+     * 
+     */
+    @bp.get('/list')
     public async list() {
         const { ctx } = this;
         let list = await ctx.service.shop.banner.select(ctx.query)
@@ -23,7 +58,7 @@ export default class BannerController extends Controller {
     }
 
 
-    @bp.post('/save', auth('banner', 'save'))
+    @bp.post('/save')
     public async save(){
         const { ctx } = this;
         let params = ctx.request.body;
@@ -34,7 +69,8 @@ export default class BannerController extends Controller {
             ctx.fail(ret.message,ret.code)
         }
     }
-    @bp.post('/update', auth('banner', 'update'))
+    //用户用户修改商家信息
+    @bp.post('/update',auth())
     public async update(){
         const { ctx } = this;
         let params = ctx.request.body;
@@ -45,7 +81,7 @@ export default class BannerController extends Controller {
             ctx.fail(ret.message,ret.code)
         }
     }
-    @bp.del('/:id', auth('banner', 'delete'))
+    @bp.del('/:id')
     public async remove(){
         const { ctx } = this;
         let ret = await ctx.service.shop.banner.remove(ctx.params.id);
@@ -56,10 +92,11 @@ export default class BannerController extends Controller {
         }
     }
     
-    @bp.get('/:id', auth('banner', 'detail'))
+    @bp.get('/:id')
     public async detail(){
         const { ctx } = this;
         const data = await ctx.service.shop.banner.detail(ctx.params.id)
+        
         ctx.success(data)
        
     }
