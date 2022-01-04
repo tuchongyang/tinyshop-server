@@ -8,16 +8,20 @@ const plugin: EggPlugin = {
   // },
   jwt: {
     enable: true,
-    package: "egg-jwt",
+    package: 'egg-jwt',
   },
   sequelize: {
     enable: true,
-    package: 'egg-sequelize'
+    package: 'egg-sequelize',
   },
   cors: {
     enable: true,
-    package: 'egg-cors'
-  }
+    package: 'egg-cors',
+  },
+  redis: {
+    enable: true,
+    package: 'egg-redis',
+  },
 };
 
 export default plugin;

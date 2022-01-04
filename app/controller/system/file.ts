@@ -4,20 +4,21 @@ const fs = require("mz/fs");
 const path = require("path");
 const dayjs = require("dayjs");
 const pump = require("mz-modules/pump");
+const auth = require('../../middleware/auth')
 /**
  * @Controller 角色
  */
 bp.prefix("/system/file", "FileController");
 export default class FileController extends Controller {
   /** 分页列表 */
-  @bp.get("/")
+  @bp.get("/", auth('file', 'list'))
   public async index() {
     const { ctx } = this;
     let list = await ctx.service.system.file.list(ctx.query);
     ctx.success(list);
   }
   /** 不分页列表 */
-  @bp.get("/list")
+  @bp.get("/list", auth('file', 'list'))
   public async list() {
     const { ctx } = this;
     let list = await ctx.service.system.file.select();

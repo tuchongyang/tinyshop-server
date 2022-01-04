@@ -6,10 +6,11 @@
 
 ### 基于egg.js+jwt+mysql编写的开箱即用的权限管理后台+商城管理后台
 
-#### 前言
+## 前言
 本项目是基于eggjs开发的一套商城系统，包含服务端、后台管理和移动端。单商户、多商户同时支持。并包含一套细粒度的多角色多权限管理系统。
 
-#### 介绍
+## 演示
+
 服务端：eggjs+mysql+jwt  (本仓库) [接口地址](http://tinyshop.tucy.top/api)
 
 管理后台: vue2+element-ui  [仓库地址](https://github.com/tuchongyang/tinyshop-admin)   [预览地址](http://tinyshop.tucy.top/admin)
@@ -17,7 +18,7 @@
 移动商城：vue3+vant+vue全家桶  [仓库地址](https://github.com/tuchongyang/tinyshop-vue)   [预览地址](http://tinyshop.tucy.top/)
 
 
-#### 快速开始
+## 快速开始
 1、下载代码 `git clone https://github.com/tuchongyang/tinyshop-server.git`
 
 2、安装依赖 `npm install`
@@ -27,8 +28,17 @@
 4、导入数据库文件 `tinyshop.sql`
 
 
+## 近期更新
 
-### 已实现功能
+- [x] 加入redis缓存
+- [ ] 添加项目初始化数据功能【进行中】
+- [ ] 完善所有接口的权限配置
+- [ ] 添加运费模块功能，并在商品下单时展示
+- [ ] 添加订单发货操作，可填写运单号，并接入第三方工具查询物流
+- [ ] 添加优惠券功能
+- [ ] 敬请期待...
+
+## 已实现功能
 #### 使用之前请先了解`egg.js`，然后把`/config/config.local.js`数据库配置成自己的，只要手动创建数据库就行，
 
 #### 系统管理员

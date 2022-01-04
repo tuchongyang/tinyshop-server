@@ -96,7 +96,9 @@ export default class UserService extends Service {
                         return (results = { code: 400, message: "帐号或密码错误", token: '' })
                     }
                     var permissions = data.roleId && await ctx.model.SystemRolePermission.findAll({where: {roleId: data.roleId},attributes:{exclude:['createdAt','updatedAt']}}) ||[];
-                    data.setDataValue("permissions", permissions)
+                    data.setDataValue("permissions", permissions);
+
+                    ctx.service.cache.redis.set("user-"+data.id, data);
                     /*
                     * sign({根据什么生成token})
                     * app.config.jwt.secret 配置的密钥
