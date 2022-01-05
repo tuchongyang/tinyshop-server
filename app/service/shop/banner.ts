@@ -10,10 +10,10 @@ export default class MerchantService extends Service {
     * @param params - 列表查询参数
     */
     public async list(options) {
-        let {page = 1, pageSize = this.config.pageSize} = options
+        let {pageIndex = 1, pageSize = this.config.pageSize} = options
         let list = await this.app.model.ShopBanner.findAndCountAll({
             limit: +pageSize,
-            offset: pageSize * (page-1),
+            offset: pageSize * (pageIndex-1),
             order: [ ["sort", 'DESC'],["createdAt", 'DESC']],
             include:[
                 {model: this.app.model.SystemFile,as:'image'}

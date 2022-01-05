@@ -9,10 +9,10 @@ export default class RoleService extends Service {
     * @param params - 列表查询参数
     */
     public async list(options) {
-        let {page = 1, pageSize = this.config.pageSize} = options
+        let {pageIndex = 1, pageSize = this.config.pageSize} = options
         let list = await this.app.model.SystemRole.findAndCountAll({
             limit: +pageSize,
-            offset: pageSize * (page-1)
+            offset: pageSize * (pageIndex-1)
         })
         return list;
     }

@@ -11,7 +11,7 @@ export default class OrderService extends Service {
     */
     public async list(options) {
         const { Op } = this.app.Sequelize;
-        let {page = 1, pageSize = this.config.pageSize} = options
+        let {pageIndex = 1, pageSize = this.config.pageSize} = options
         const where = {
             status: options.status || '',
             userName: options.userName?{
@@ -26,7 +26,7 @@ export default class OrderService extends Service {
         }
         let list = await this.app.model.GoodOrder.findAndCountAll({
             limit: +pageSize,
-            offset: pageSize * (page-1),
+            offset: pageSize * (pageIndex-1),
             include:[
                 { model: this.app.model.GoodOrderLine,as:'goodList'}
             ],

@@ -9,7 +9,7 @@ export default class GoodService extends Service {
     * @param params - 列表查询参数
     */
     public async list(options) {
-        let {page = 1, pageSize = this.config.pageSize} = options;
+        let {pageIndex = 1, pageSize = this.config.pageSize} = options;
         const { Op } = this.app.Sequelize;
         const where = {};
         const order =[ ["createdAt", 'DESC']]
@@ -40,7 +40,7 @@ export default class GoodService extends Service {
         }
         let list = await this.app.model.Good.findAndCountAll({
             limit: +pageSize,
-            offset: pageSize * (page-1),
+            offset: pageSize * (pageIndex-1),
             order: order,
             where: where,
             include:[

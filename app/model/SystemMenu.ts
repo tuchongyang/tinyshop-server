@@ -4,7 +4,7 @@ module.exports = app => {
     const User = app.model.define('system_menu', {
         id: { type: INTEGER, primaryKey: true, autoIncrement: true },
         name: STRING, // 菜单名
-        url: STRING, //菜单路径
+        path: STRING, //菜单路径
         icon: STRING, //菜单图标
         parentId: { type: INTEGER, defaultValue: null }, // 上级菜单id
         sort: INTEGER,

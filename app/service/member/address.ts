@@ -11,14 +11,14 @@ export default class AddressService extends Service {
     */
     public async list(options) {
         const { ctx } = this
-        let {page = 1, pageSize = this.config.pageSize} = options
+        let {pageIndex = 1, pageSize = this.config.pageSize} = options
         const where = {userId: ctx.user};
         if(typeof options.isDefault !== 'undefined'){
             where['isDefault']=options.isDefault?true:false
         }
         let list = await this.app.model.UserAddress.findAndCountAll({
             limit: +pageSize,
-            offset: pageSize * (page-1),
+            offset: pageSize * (pageIndex-1),
             where: where
         })
         return list;

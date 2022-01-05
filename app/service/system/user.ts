@@ -9,123 +9,121 @@ export default class UserService extends Service {
 
   /**
    * 列表
-   * @param params - 列表查询参数
+   * @param options - 列表查询参数
    */
-    public async list(options) {
-        let {page = 1, pageSize = this.config.pageSize} = options
-        let list = await this.app.model.SystemUser.findAndCountAll({
-            limit: +pageSize,
-            offset: pageSize * (page-1),
-            include:[
-                {
-                    model: this.app.model.SystemRole,
-                    as: 'role',//这里的 as需要与之前定义的as名字相同
-                }
-            ],
-        })
-        return list;
+  public async list(options) {
+    const { pageIndex = 1, pageSize = this.config.pageSize, status } = options;
+    const { Op } = this.app.Sequelize;
+    const where = {} as any;
+    [ 'name', 'username', 'email', 'phone' ].forEach(a => {
+      if (options[a]) {
+        where[a] = {
+          [Op.substring]: '%' + options[a],
+        };
+      }
+    });
+    if (typeof status !== 'undefined' && status !== '') {
+      where.status = status;
     }
-    
+    const list = await this.app.model.SystemUser.findAndCountAll({
+      limit: +pageSize,
+      offset: pageSize * (pageIndex - 1),
+      where,
+      include: [
+        {
+          model: this.app.model.SystemRole,
+          as: 'role', // 这里的 as需要与之前定义的as名字相同
+        },
+      ],
+      attributes: { exclude: [ 'password' ] },
+    });
+    return list;
+  }
   /**
    * 保存
-   * @param data - 列表查询参数
+   * @param options - 列表查询参数
    */
-    public async save(options: any) {
-        const { ctx } = this
-        const {  password } = options
-        let results = { code: 400, message: "失败", }
-        await ctx.model.SystemUser.findOne({
-            where: { username:options.username, },// 查询条件 
-        }).then(async result => {
-            if (!result) {
-                const hash = crypto.createHash('md5');
-                options.password = hash.update(password).digest('hex')
-                await ctx.model.SystemUser.create(options).then(() => {
-                    results = { code: 0, message: "添加成功", }
-                }).catch(err => {
-                    results = {
-                        code: 400,
-                        message: err,
-                    }
-                })
-            } else {
-                results = {
-                    code: 400,
-                    message: "该账号已存在",
-                }
-            }
-        })
+  public async save(options: any) {
+    const { ctx } = this;
+    const { password } = options;
+    let results = { code: 400, message: '失败'}
+    const result = await ctx.model.SystemUser.findOne({
+      where: { username: options.username }, // 查询条件
+    });
+    if (!result) {
+      const hash = crypto.createHash('md5');
+      options.password = hash.update(password).digest('hex');
+      await ctx.model.SystemUser.create(options);
+      results = { code: 0, message: '添加成功' };
+    } else {
+      results = { code: 400, message: '该账号已存在' };
+    }
 
-        return results
+    return results;
+  }
+  /** 更新 */
+  public async update(options: any) {
+    const { ctx } = this;
+    const { id, ...opts } = options;
+    let results = { code: 500, message: '失败' };
+    await ctx.model.SystemUser.update(opts, {
+      where: { id },
+    });
+    results = { code: 0, message: '更新成功' };
+    return results;
+  }
+  /**
+   * 登录
+   * @param options - 参数
+   */
+  public async login(options: any) {
+    const { ctx } = this;
+    const { or } = this.app.Sequelize.Op;
+    const { name, password } = options;
+    let results = { code: 400, message: '失败', token: '' };
+    const result = await ctx.model.SystemUser.findOne({
+      where: {
+        [or]: [{ username: name || '' }, { email: name || '' }, { phone: name || '' }],
+      },
+    });
+    if (result) {
+      const hash = crypto.createHash('md5');
+      const HashPassword = hash.update(password).digest('hex');
+      const data = await ctx.model.SystemUser.findOne({
+        where: {
+          [or]: [{ username: name || '' }, { email: name || '' }, { phone: name || '' }],
+          password: HashPassword,
+        },
+        attributes: { exclude: [ 'password' ] },
+      });
+      if (!data) {
+        return (results = { code: 400, message: '帐号或密码错误', token: '' })
+      }
+      const permissions = data.roleId && await ctx.model.SystemRolePermission.findAll({ where: { roleId: data.roleId }, attributes: { exclude: [ 'createdAt', 'updatedAt' ] } }) || [];
+      data.setDataValue('permissions', permissions);
+      ctx.service.cache.redis.set('user-' + data.id, data);
+      /*
+      * sign({根据什么生成token})
+      * app.config.jwt.secret 配置的密钥
+      * {expiresIn:'24h'} 过期时间
+      */
+      const token = this.app.jwt.sign({ user: data.id }, this.config.jwt.secret, { expiresIn: '24h' });
+      results = { code: 0, message: '登录成功', token };
+    } else {
+      results = { code: 400, message: '账号不存在', token: '' };
     }
-    /**更新 */
-    public async update(options: any) {
-        const { ctx } = this
-        const {id, ...opts} = options
-        let results = { code: 500, message: "失败", }
-        await ctx.model.SystemUser.update(opts,{
-            where:{id: id}
-        }).then(() => {
-            results = { code: 0, message: "更新成功", }
-        }).catch(err => {
-            results = { code: 500, message: err, }
-        })
-        return results
-    }
-    /**
-     * 登录
-     * @param options - 参数
-     */
-    public async login(options: any) {
-        const { ctx } = this
-        const { username, password } = options
-        let results = {  code: 400, message: "失败",token:'' }
-        await ctx.model.SystemUser.findOne({
-            where: {
-                username, // 查询条件
-            },
-        }).then(async result => {
-            if (result) {
-                const hash = crypto.createHash('md5');
-                options.password = hash.update(password).digest('hex')
-                
-                await ctx.model.SystemUser.findOne({
-                    where: options,
-                    attributes:{exclude:['password']}
-                }).then(async (data) => {
-                    if(!data){
-                        return (results = { code: 400, message: "帐号或密码错误", token: '' })
-                    }
-                    var permissions = data.roleId && await ctx.model.SystemRolePermission.findAll({where: {roleId: data.roleId},attributes:{exclude:['createdAt','updatedAt']}}) ||[];
-                    data.setDataValue("permissions", permissions);
-
-                    ctx.service.cache.redis.set("user-"+data.id, data);
-                    /*
-                    * sign({根据什么生成token})
-                    * app.config.jwt.secret 配置的密钥
-                    * {expiresIn:'24h'} 过期时间
-                    */
-                    const token = this.app.jwt.sign({ user: data.id }, this.config.jwt.secret,{expiresIn:'24h'});
-                    results = {  code: 0, message: "登录成功",token }
-                }).catch(err => {
-                    results = { code: 400, message: err, token: '' }
-                })
-            } else {
-                results = { code: 400, message: "账号不存在", token: '' }
-            }
-        })
-        return results
-    }
+    return results;
+  }
 
     public async detail(id){
-        let data = await this.app.model.SystemUser.findOne({where: {id}})
+        let data = await this.app.model.SystemUser.findOne({where: {id},attributes: { exclude: [ 'password' ] },})
         return data
     }
     //删除
     public async remove(id){
         let results
         await this.ctx.model.SystemUser.destroy({ where: { id}}).then(() => {
-            results = { code: 0, message: "删除成功", }
+            results = { code: 0, message: '删除成功', }
         }).catch(error => {
             results = { code: 400, message: error, }
         })
@@ -154,7 +152,7 @@ export default class UserService extends Service {
                     {model: this.app.model.SystemFile,as: 'logo'}
                 ]
             });
-            userInfo.setDataValue("merchant",merchantModel)
+            userInfo.setDataValue('merchant',merchantModel)
         }
         return userInfo
     }

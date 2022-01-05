@@ -63,18 +63,20 @@ export default class UserController extends Controller {
    * @api {post} /api/system/user/login 登录
    * @apiName login
    * @apiGroup 用户管理
+   * @apiParam {name} 用户名、邮箱、手机
+   * @apiParam {password} 密码
    *
    * @apiParamExample {json} 请求示例:
    * {
-   *    "username":"admin",
+   *    "name":"admin",
    *    "password":"123456"
    * }
    */
   @bp.post('/login')
   public async login() {
     const { ctx } = this;
-    const { username, password } = ctx.request.body;
-    const { code, message, token } = await ctx.service.system.user.login({ username, password });
+    const { name, password } = ctx.request.body;
+    const { code, message, token } = await ctx.service.system.user.login({ name, password });
     if (code === 0) {
       ctx.success(token);
     } else {
@@ -119,6 +121,7 @@ export default class UserController extends Controller {
   public async update() {
     const { ctx } = this;
     const params = ctx.request.body;
+    params.id = ctx.user
     const ret = await ctx.service.system.user.update(params);
     if (ret.code === 0) {
       ctx.success();
@@ -130,7 +133,7 @@ export default class UserController extends Controller {
   public async modify() {
     const { ctx } = this;
     const params = ctx.request.body;
-    const ret = await ctx.service.system.user.update({id: ctx.params.id, params});
+    const ret = await ctx.service.system.user.update({id: ctx.params.id, ...params});
     if (ret.code === 0) {
       ctx.success();
     } else {

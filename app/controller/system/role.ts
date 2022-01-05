@@ -11,7 +11,7 @@ export default class RoleController extends Controller {
     public async index() {
         const { ctx } = this;
         let list = await ctx.service.system.role.list(ctx.query)
-        ctx.success({list,user:ctx.user})
+        ctx.success(list)
     }
     /** 不分页列表 */
     @bp.get('/list', auth('system-role','list'))

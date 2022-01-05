@@ -11,10 +11,10 @@ export default class MenuService extends Service {
    * @param options - 列表查询参数
    */
   public async list(options) {
-    const { page = 1, pageSize = this.config.pageSize} = options;
+    const { pageIndex = 1, pageSize = this.config.pageSize} = options;
     const list = await this.app.model.SystemMenu.findAndCountAll({
       limit: +pageSize,
-      offset: pageSize * (page - 1),
+      offset: pageSize * (pageIndex - 1),
     });
     return list;
   }
@@ -29,7 +29,7 @@ export default class MenuService extends Service {
    * 树形列表
    */
   public async tree() {
-    // let {page = 1, pageSize = this.config.pageSize} = options
+    // let {pageIndex = 1, pageSize = this.config.pageSize} = options
     const list = await this.app.model.SystemMenu.findAll({
       orderby: 'sort ASC',
       attributes: {

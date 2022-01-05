@@ -28,26 +28,26 @@ export default class HomeController extends Controller {
     ];
     // 菜单
     const menus = [
-      { id: 1, name: '系统管理', url: '/system' },
-      { id: 2, name: '菜单管理', url: '/system/menu', parentId: 1 },
-      { id: 3, name: '用户管理', url: '/system/user', parentId: 1 },
-      { id: 4, name: '角色管理', url: '/system/role', parentId: 1 },
-      { id: 5, name: '文件管理', url: '/system/file', parentId: 1 },
-      { id: 6, name: '日志管理', url: '/system/log', parentId: 1 },
-      { id: 7, name: '商家管理', url: '/merchant' },
-      { id: 8, name: '商家列表', url: '/merchant/merchant', parentId: 7 },
-      { id: 9, name: '商品管理', url: '/good' },
-      { id: 10, name: '商品列表', url: '/good/list', parentId: 9 },
-      { id: 11, name: '商品分类', url: '/good/category', parentId: 9 },
-      { id: 12, name: '设置', url: '/setting' },
-      { id: 13, name: '个人资料', url: '/setting/person', parentId: 12 },
-      { id: 14, name: '店铺资料', url: '/setting/shop', parentId: 12 },
-      { id: 15, name: '订单', url: '/order' },
-      { id: 16, name: '订单列表', url: '/order/list', parentId: 15 },
+      { id: 1, name: '系统管理', path: '/system' },
+      { id: 2, name: '菜单管理', path: '/system/menu', parentId: 1 },
+      { id: 3, name: '用户管理', path: '/system/user', parentId: 1 },
+      { id: 4, name: '角色管理', path: '/system/role', parentId: 1 },
+      { id: 5, name: '文件管理', path: '/system/file', parentId: 1 },
+      { id: 6, name: '日志管理', path: '/system/reqLog', parentId: 1 },
+      { id: 7, name: '商家管理', path: '/merchant' },
+      { id: 8, name: '商家列表', path: '/merchant/merchant', parentId: 7 },
+      { id: 9, name: '商品管理', path: '/good' },
+      { id: 10, name: '商品列表', path: '/good/list', parentId: 9 },
+      { id: 11, name: '商品分类', path: '/good/category', parentId: 9 },
+      { id: 12, name: '设置', path: '/setting' },
+      { id: 13, name: '个人资料', path: '/setting/person', parentId: 12 },
+      { id: 14, name: '店铺资料', path: '/setting/shop', parentId: 12 },
+      { id: 15, name: '订单', path: '/order' },
+      { id: 16, name: '订单列表', path: '/order/list', parentId: 15 },
     ];
     // 权限
     const permissions = [
-      { id: 'system-user', name: '用户管理', actions: 'list,add,delete,detail' },
+      { id: 'system-user', name: '用户管理', actions: 'list,add,delete,detail,update' },
       { id: 'system-menu', name: '菜单管理', actions: 'list,add,delete,detail,tree' },
       { id: 'system-role', name: '角色管理', actions: 'list,add,delete,detail,menuSave,permissionSave' },
       { id: 'system-file', name: '文件管理', actions: 'list,add,delete,detail' },
@@ -81,7 +81,7 @@ export default class HomeController extends Controller {
     ];
     // 角色权限
     const rolePermissions = [
-      { roleId: 1, permissionId: 'system-user', actions: 'list,add,delete,detail' },
+      { roleId: 1, permissionId: 'system-user', actions: 'list,add,delete,detail,update' },
       { roleId: 1, permissionId: 'system-menu', actions: 'list,add,delete,detail,tree' },
       { roleId: 1, permissionId: 'system-role', actions: 'list,add,delete,detail,menuSave,permissionSave' },
       { roleId: 1, permissionId: 'system-file', actions: 'list,add,delete,detail' },

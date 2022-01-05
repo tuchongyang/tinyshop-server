@@ -32,15 +32,18 @@ export default class SysReqLogService extends Service {
      * 分页加载日志信息
      */
     async list(options) {
-        let {page = 1, pageSize = this.config.pageSize} = options
+        let {pageIndex = 1, pageSize = this.config.pageSize} = options
         const result = await this.app.model.SystemReqLog.findAndCountAll({
             order: [
                 ["id", 'DESC'],
             ],
             limit: +pageSize,
-            offset: pageSize * (page-1),
-            include:[
-                {model: this.app.model.SystemUser,as:'user'}
+            offset: pageSize * (pageIndex-1),
+            attributes:{
+                include:[[this.app.Sequelize.col('user.name'),'userName'],[this.app.Sequelize.col('user.username'),'userUsername']]
+            },
+            include: [
+                {model: this.app.model.SystemUser, as:'user',attributes:[]}
             ]
         });
         return result;
