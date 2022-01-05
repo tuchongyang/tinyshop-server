@@ -1,4 +1,4 @@
-# tinyshop-server
+# 多商户商城管理系统
 
 ![](https://img.shields.io/github/package-json/v/tuchongyang/tinyshop-server)
 ![](https://img.shields.io/github/package-json/dependency-version/tuchongyang/tinyshop-server/egg)
@@ -9,13 +9,27 @@
 ## 前言
 本项目是基于eggjs开发的一套商城系统，包含服务端、后台管理和移动端。单商户、多商户同时支持。并包含一套细粒度的多角色多权限管理系统。
 
-## 演示
+## 预览
+[后台管理](http://tinyshop.tucy.top/admin)
 
+| 角色 |  登录名 | 登录密码 |
+|--------|---------|----------|
+| 管理员 | admin | 123456 |
+| 商家 | tcy | 123456 |
+
+[移动商城](http://tinyshop.tucy.top/)
+
+[API文档](http://tinyshop.tucy.top/doc)
+
+
+
+
+## 项目地址
 服务端：eggjs+mysql+jwt  (本仓库) [接口地址](http://tinyshop.tucy.top/api)
 
-管理后台: vue2+element-ui  [仓库地址](https://github.com/tuchongyang/tinyshop-admin)   [预览地址](http://tinyshop.tucy.top/admin)
+管理后台: vue2+element-ui  [仓库地址](https://github.com/tuchongyang/tinyshop-admin)   （vue3重构中...）
 
-移动商城：vue3+vant+vue全家桶  [仓库地址](https://github.com/tuchongyang/tinyshop-vue)   [预览地址](http://tinyshop.tucy.top/)
+移动商城：vue3+vant+vue全家桶  [仓库地址](https://github.com/tuchongyang/tinyshop-vue)  
 
 
 ## 快速开始
@@ -27,15 +41,23 @@
 
 4、导入数据库文件 `tinyshop.sql`
 
+## 依赖安装
+
+-- 项目启动需要安装redis，window系统请前往[](https://github.com/MicrosoftArchive/redis/releases)下载msi文件直接安装即可。
+
+-- 初次启动，请先调用 `http://localhost:7001/api/init`，将会初始化用户、角色、角色权限、菜单、角色菜单数据。初始化后，将自动创建两个账号，管理员：`admin/123456`，商家：`tcy/123456`
+
 
 ## 近期更新
 
 - [x] 加入redis缓存
-- [ ] 添加项目初始化数据功能【进行中】
-- [ ] 完善所有接口的权限配置
+- [x] 添加项目初始化数据功能
+- [x] 完善所有接口的权限配置
+- [ ] 使用vue3重构后台管理系统【进行中】
 - [ ] 添加运费模块功能，并在商品下单时展示
 - [ ] 添加订单发货操作，可填写运单号，并接入第三方工具查询物流
 - [ ] 添加优惠券功能
+- [ ] 添加店铺装修功能
 - [ ] 敬请期待...
 
 ## 已实现功能
@@ -70,15 +92,6 @@
 - [x] 广告图列表
 - [x] 我的收藏（列表，添加，取消）
 
-## 预览
-[后台管理](http://tinyshop.tucy.top/admin)
-
-| 角色 |  登录名 | 登录密码 |
-|--------|---------|----------|
-| 管理员 | admin | 123456 |
-| 商家 | tcy | 123456 |
-
-[API文档](http://tinyshop.tucy.top/doc)
 
 
 ## 截图

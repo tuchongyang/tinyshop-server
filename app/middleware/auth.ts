@@ -14,7 +14,7 @@ module.exports = function(permissionId?: string, action?: string) {
       }
       const permission = user.permissions.find(item => item.permissionId === permissionId && item.actions.indexOf(action) > -1);
       if (!permission) {
-        ctx.fail(`功能${permissionId}未授权${action}`, 403);
+        ctx.fail(`功能${permissionId}未授权${action}操作`, 403);
         return false;
       }
     }

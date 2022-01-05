@@ -82,7 +82,7 @@ export default class HomeController extends Controller {
     // 角色权限
     const rolePermissions = [
       { roleId: 1, permissionId: 'system-user', actions: 'list,add,delete,detail' },
-      { roleId: 1, permissionId: 'system-menu', actions: 'list,add,delete,detail' },
+      { roleId: 1, permissionId: 'system-menu', actions: 'list,add,delete,detail,tree' },
       { roleId: 1, permissionId: 'system-role', actions: 'list,add,delete,detail,menuSave,permissionSave' },
       { roleId: 1, permissionId: 'system-file', actions: 'list,add,delete,detail' },
       { roleId: 1, permissionId: 'system-log', actions: 'list' },
