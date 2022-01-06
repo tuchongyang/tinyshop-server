@@ -24,7 +24,7 @@ module.exports = app => {
         // 一对多
         app.model.GoodOrder.hasMany(app.model.GoodOrderLine, { foreignKey: 'orderId', targetKey: 'id',as:'goodList'});
         GoodOrder.belongsTo(app.model.Merchant, { foreignKey: 'merchantId', targetKey: 'id', as: 'merchant'});// 一对一
-        GoodOrder.belongsTo(app.model.SystemUser, { foreignKey: 'userId', targetKey: 'id', as: 'user'});
+        GoodOrder.belongsTo(app.model.SystemUser, { foreignKey: 'userId', targetKey: 'id', as: 'user' });
     }
     return GoodOrder;
 };

@@ -1,6 +1,6 @@
 import { Context } from 'egg';
 
-module.exports = function(permissionId?: string, action?: string) {
+const auth = function(permissionId?: string, action?: string) {
   return async function auth(ctx: Context) {
     if (!ctx.user) {
       ctx.fail('未登录', 401);
@@ -21,3 +21,5 @@ module.exports = function(permissionId?: string, action?: string) {
     return true;
   };
 };
+module.exports = auth;
+export default auth;

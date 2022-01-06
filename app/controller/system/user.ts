@@ -121,7 +121,7 @@ export default class UserController extends Controller {
   public async update() {
     const { ctx } = this;
     const params = ctx.request.body;
-    params.id = ctx.user
+    params.id = ctx.user;
     const ret = await ctx.service.system.user.update(params);
     if (ret.code === 0) {
       ctx.success();
@@ -133,7 +133,7 @@ export default class UserController extends Controller {
   public async modify() {
     const { ctx } = this;
     const params = ctx.request.body;
-    const ret = await ctx.service.system.user.update({id: ctx.params.id, ...params});
+    const ret = await ctx.service.system.user.update({id: ctx.params.id, ...params });
     if (ret.code === 0) {
       ctx.success();
     } else {

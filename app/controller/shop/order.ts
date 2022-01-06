@@ -7,14 +7,14 @@ const auth = require('../../middleware/auth')
 bp.prefix('/shop/order', 'OrderController')
 export default class OrderController extends Controller {
     /** 分页列表 */
-    @bp.get('/',auth())
+    @bp.get('/', auth('shop-order', 'list'))
     public async index() {
         const { ctx } = this;
         let list = await ctx.service.shop.order.list(ctx.query)
         ctx.success(list)
     }
     /** 不分页列表 */
-    @bp.get('/list',auth())
+    @bp.get('/list', auth('shop-order', 'list'))
     public async list() {
         const { ctx } = this;
         let list = await ctx.service.shop.order.select()
@@ -31,7 +31,7 @@ export default class OrderController extends Controller {
             ctx.fail(ret.message,ret.code)
         }
     }
-    @bp.del('/:id',auth())
+    @bp.del('/:id', auth('shop-order', 'delete'))
     public async remove(){
         const { ctx } = this;
         let ret = await ctx.service.shop.order.remove(ctx.params.id);

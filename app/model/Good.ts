@@ -6,7 +6,7 @@ module.exports = app => {
         name: { type: STRING, allowNull: false }, // 商品名称
         description: { type: STRING }, // 商品描述
         content: { type: TEXT }, // 商品描述
-        thumbnail: INTEGER, // 缩略图,关联图片id
+        picId: INTEGER, // 缩略图,关联图片id
         // salePrice: { type: DECIMAL}, // 售卖价
         // marketPrice: { type: DECIMAL}, // 市场价
         categoryId: INTEGER, // 关联商品分类
@@ -25,7 +25,7 @@ module.exports = app => {
         app.model.Good.hasMany(app.model.GoodSpec, { foreignKey: 'goodId', targetKey: 'id',as:'apecs'});
         // 一对一
         Good.belongsTo(app.model.GoodCategory, { foreignKey: 'categoryId', targetKey: 'id', as: 'category'});// 一对一
-        Good.belongsTo(app.model.SystemFile, { foreignKey: 'thumbnail', targetKey: 'id', as: 'thumbnailImage'});
+        Good.belongsTo(app.model.SystemFile, { foreignKey: 'picId', targetKey: 'id', as: 'pic'});
     }
     return Good;
 };

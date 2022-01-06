@@ -7,7 +7,7 @@ const auth = require('../../middleware/auth')
 bp.prefix('/shop/banner', 'BannerController')
 export default class BannerController extends Controller {
     /** 分页列表 */
-    @bp.get('/', auth('banner', 'list'))
+    @bp.get('/', auth('shop-banner', 'list'))
     public async index() {
         const { ctx } = this;
         let list = await ctx.service.shop.banner.list(ctx.query)
@@ -15,7 +15,7 @@ export default class BannerController extends Controller {
     }
     /** 不分页列表 */
     
-    @bp.get('/list', auth('banner', 'list'))
+    @bp.get('/list', auth('shop-banner', 'list'))
     public async list() {
         const { ctx } = this;
         let list = await ctx.service.shop.banner.select(ctx.query)
@@ -23,18 +23,20 @@ export default class BannerController extends Controller {
     }
 
 
-    @bp.post('/save', auth('banner', 'save'))
+    @bp.post('/save', auth('shop-banner', 'add'))
     public async save(){
         const { ctx } = this;
         let params = ctx.request.body;
-        let ret = await ctx.service.shop.banner.save(params);
+        const user = await ctx.service.cache.redis.get('user-' + ctx.user);
+console.log('user==============',user)
+        let ret = await ctx.service.shop.banner.save({...params,merchantId: user.merchant?.id});
         if(ret.code==0){
             ctx.success()
         }else{
             ctx.fail(ret.message,ret.code)
         }
     }
-    @bp.post('/update', auth('banner', 'update'))
+    @bp.post('/update', auth('shop-banner', 'update'))
     public async update(){
         const { ctx } = this;
         let params = ctx.request.body;
@@ -45,7 +47,7 @@ export default class BannerController extends Controller {
             ctx.fail(ret.message,ret.code)
         }
     }
-    @bp.del('/:id', auth('banner', 'delete'))
+    @bp.del('/:id', auth('shop-banner', 'delete'))
     public async remove(){
         const { ctx } = this;
         let ret = await ctx.service.shop.banner.remove(ctx.params.id);
@@ -56,7 +58,7 @@ export default class BannerController extends Controller {
         }
     }
     
-    @bp.get('/:id', auth('banner', 'detail'))
+    @bp.get('/:id', auth('shop-banner', 'detail'))
     public async detail(){
         const { ctx } = this;
         const data = await ctx.service.shop.banner.detail(ctx.params.id)

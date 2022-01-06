@@ -36,14 +36,15 @@ export default class HomeController extends Controller {
       { id: 6, name: '日志管理', path: '/system/reqLog', parentId: 1 },
       { id: 7, name: '商家管理', path: '/merchant' },
       { id: 8, name: '商家列表', path: '/merchant/merchant', parentId: 7 },
-      { id: 9, name: '商品管理', path: '/good' },
-      { id: 10, name: '商品列表', path: '/good/list', parentId: 9 },
-      { id: 11, name: '商品分类', path: '/good/category', parentId: 9 },
-      { id: 12, name: '设置', path: '/setting' },
-      { id: 13, name: '个人资料', path: '/setting/person', parentId: 12 },
-      { id: 14, name: '店铺资料', path: '/setting/shop', parentId: 12 },
-      { id: 15, name: '订单', path: '/order' },
-      { id: 16, name: '订单列表', path: '/order/list', parentId: 15 },
+      { id: 9, name: '店铺管理', path: '/shop' },
+      { id: 10, name: '商品管理', path: '/shop/good', parentId: 9 },
+      { id: 11, name: '商品分类', path: '/shop/category', parentId: 9 },
+      { id: 12, name: '首页轮播图', path: '/shop/banner', parentId: 9 },
+      { id: 13, name: '设置', path: '/setting' },
+      { id: 14, name: '个人资料', path: '/setting/person', parentId: 13 },
+      { id: 15, name: '店铺资料', path: '/setting/shop', parentId: 13 },
+      { id: 16, name: '订单', path: '/order' },
+      { id: 17, name: '订单列表', path: '/order/list', parentId: 16 },
     ];
     // 权限
     const permissions = [
@@ -53,10 +54,10 @@ export default class HomeController extends Controller {
       { id: 'system-file', name: '文件管理', actions: 'list,add,delete,detail' },
       { id: 'system-log', name: '日志管理', actions: 'list' },
       { id: 'merchant', name: '商家管理', actions: 'list,add,delete,detail,update' },
-      { id: 'good', name: '商品管理', actions: 'list,add,delete,detail' },
-      { id: 'goodCategory', name: '商品分类管理', actions: 'list,add,delete,detail' },
-      { id: 'order', name: '订单', actions: 'list,add,delete,detail' },
-      { id: 'banner', name: '轮播图', actions: 'list,add,delete,detail' },
+      { id: 'shop-good', name: '商品管理', actions: 'list,add,delete,detail' },
+      { id: 'shop-goodCategory', name: '商品分类管理', actions: 'list,add,delete,detail' },
+      { id: 'shop-order', name: '订单', actions: 'list,add,delete,detail' },
+      { id: 'shop-banner', name: '轮播图', actions: 'list,add,delete,detail' },
     ];
     // 角色菜单
     const roleMenus = [
@@ -68,8 +69,9 @@ export default class HomeController extends Controller {
       { roleId: 1, menuId: 6 },
       { roleId: 1, menuId: 7 },
       { roleId: 1, menuId: 8 },
-      { roleId: 1, menuId: 12 },
       { roleId: 1, menuId: 13 },
+      { roleId: 1, menuId: 14 },
+
       { roleId: 2, menuId: 9 },
       { roleId: 2, menuId: 10 },
       { roleId: 2, menuId: 11 },
@@ -78,6 +80,7 @@ export default class HomeController extends Controller {
       { roleId: 2, menuId: 14 },
       { roleId: 2, menuId: 15 },
       { roleId: 2, menuId: 16 },
+      { roleId: 2, menuId: 17 },
     ];
     // 角色权限
     const rolePermissions = [
@@ -87,11 +90,11 @@ export default class HomeController extends Controller {
       { roleId: 1, permissionId: 'system-file', actions: 'list,add,delete,detail' },
       { roleId: 1, permissionId: 'system-log', actions: 'list' },
       { roleId: 1, permissionId: 'merchant', actions: 'list,add,delete,detail,update' },
-      { roleId: 2, permissionId: 'good', actions: 'list,add,delete,detail' },
-      { roleId: 2, permissionId: 'goodCategory', actions: 'list,add,delete,detail' },
-      { roleId: 1, permissionId: 'merchant', actions: 'detail,update' },
-      { roleId: 2, permissionId: 'order', actions: 'list,add,delete,detail' },
-      { roleId: 2, permissionId: 'banner', actions: 'list,add,delete,detail' },
+      { roleId: 2, permissionId: 'shop-good', actions: 'list,add,delete,detail' },
+      { roleId: 2, permissionId: 'shop-goodCategory', actions: 'list,add,delete,detail' },
+      { roleId: 2, permissionId: 'merchant', actions: 'detail,update' },
+      { roleId: 2, permissionId: 'shop-order', actions: 'list,add,delete,detail' },
+      { roleId: 2, permissionId: 'shop-banner', actions: 'list,add,delete,detail' },
     ];
     const users = [{
       name: '超级管理员',
@@ -99,15 +102,15 @@ export default class HomeController extends Controller {
       password: '123456',
       type: 1,
       roleId: 1,
-    },{
+    }, {
       name: '商家',
       username: 'tcy',
       password: '123456',
       type: 2,
       roleId: 2,
-    }].map(a=>{
+    }].map(a => {
       a.password = crypto.createHash('md5').update(a.password).digest('hex');
-      return a
+      return a;
     });
 
     // 用户

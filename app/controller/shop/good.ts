@@ -7,14 +7,14 @@ const auth = require('../../middleware/auth')
 bp.prefix('/shop/good', 'GoodController')
 export default class GoodController extends Controller {
     
-    @bp.get('/', auth('good', 'list'))
+    @bp.get('/', auth('shop-good', 'list'))
     public async index() {
         const { ctx } = this;
         let list = await ctx.service.shop.good.list(ctx.query)
         ctx.success(list)
     }
     /** 不分页列表 */
-    @bp.get('/list', auth('good', 'list'))
+    @bp.get('/list', auth('shop-good', 'list'))
     public async list() {
         const { ctx } = this;
         let list = await ctx.service.shop.good.select()
@@ -22,7 +22,7 @@ export default class GoodController extends Controller {
     }
 
 
-    @bp.post('/save', auth('good', 'add'))
+    @bp.post('/save', auth('shop-good', 'add'))
     public async save(){
         const { ctx } = this;
         let params = ctx.request.body;
@@ -33,7 +33,7 @@ export default class GoodController extends Controller {
             ctx.fail(ret.message,ret.code)
         }
     }
-    @bp.del('/:id', auth('good', 'delete'))
+    @bp.del('/:id', auth('shop-good', 'delete'))
     public async remove(){
         const { ctx } = this;
         let ret = await ctx.service.shop.good.remove(ctx.params.id);
@@ -44,7 +44,7 @@ export default class GoodController extends Controller {
         }
     }
     
-    @bp.get('/:id', auth('good', 'detail'))
+    @bp.get('/:id', auth('shop-good', 'detail'))
     public async detail(){
         const { ctx } = this;
         const data = await ctx.service.shop.good.detail(ctx.params.id)

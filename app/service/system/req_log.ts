@@ -28,33 +28,33 @@ export default class SysReqLogService extends Service {
         return await this.app.model.SystemReqLog.count();
     }
 
-    /**
-     * 分页加载日志信息
-     */
-    async list(options) {
-        let {pageIndex = 1, pageSize = this.config.pageSize} = options
-        const result = await this.app.model.SystemReqLog.findAndCountAll({
-            order: [
-                ["id", 'DESC'],
-            ],
-            limit: +pageSize,
-            offset: pageSize * (pageIndex-1),
-            attributes:{
-                include:[[this.app.Sequelize.col('user.name'),'userName'],[this.app.Sequelize.col('user.username'),'userUsername']]
-            },
-            include: [
-                {model: this.app.model.SystemUser, as:'user',attributes:[]}
-            ]
-        });
-        return result;
-    }
+  /**
+   * 分页加载日志信息
+   */
+  async list(options) {
+    const { pageIndex = 1, pageSize = this.config.pageSize } = options;
+    const result = await this.app.model.SystemReqLog.findAndCountAll({
+      order: [
+        [ 'id', 'DESC' ],
+      ],
+      limit: +pageSize,
+      offset: pageSize * (pageIndex - 1),
+      attributes: {
+        include: [[ this.app.Sequelize.col('user.name'), 'userName' ], [ this.app.Sequelize.col('user.username'), 'userUsername' ]],
+      },
+      include: [
+        { model: this.app.model.SystemUser, as: 'user', attributes: [] },
+      ],
+    });
+    return result;
+  }
 
     
     //删除
     public async remove(id){
         let results
         await this.ctx.model.SystemReqLog.destroy({ where: { id}}).then(() => {
-            results = { code: 0, message: "删除成功", }
+            results = { code: 0, message: '删除成功', }
         }).catch(error => {
             results = { code: 400, message: error, }
         })
