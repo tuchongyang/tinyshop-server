@@ -10,5 +10,13 @@ export default () => {
     password: 'Root123.', // 密码
     database: 'tinyshop', // 数据库名
   };
+  config.redis = {
+    client: {
+      port: 6379, // Redis port
+      host: '127.0.0.1', // Redis host
+      password: 'auth',
+      db: 0,
+    },
+  };
   return config;
 };
