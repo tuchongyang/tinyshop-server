@@ -56,7 +56,7 @@ export default class HomeController extends Controller {
       { id: 'system-log', name: '日志管理', actions: 'list' },
       { id: 'merchant', name: '商家管理', actions: 'list,add,delete,detail,update' },
       { id: 'shop-good', name: '商品管理', actions: 'list,add,delete,detail' },
-      { id: 'shop-goodCategory', name: '商品分类管理', actions: 'list,add,delete,detail' },
+      { id: 'shop-category', name: '商品分类管理', actions: 'list,add,delete,detail' },
       { id: 'shop-order', name: '订单', actions: 'list,add,delete,detail' },
       { id: 'shop-banner', name: '轮播图', actions: 'list,add,delete,detail' },
     ];
@@ -94,7 +94,7 @@ export default class HomeController extends Controller {
       { roleId: 1, permissionId: 'system-log', actions: 'list' },
       { roleId: 1, permissionId: 'merchant', actions: 'list,add,delete,detail,update' },
       { roleId: 2, permissionId: 'shop-good', actions: 'list,add,delete,detail' },
-      { roleId: 2, permissionId: 'shop-goodCategory', actions: 'list,add,delete,detail' },
+      { roleId: 2, permissionId: 'shop-category', actions: 'list,add,delete,detail' },
       { roleId: 2, permissionId: 'merchant', actions: 'detail,update' },
       { roleId: 2, permissionId: 'shop-order', actions: 'list,add,delete,detail' },
       { roleId: 2, permissionId: 'shop-banner', actions: 'list,add,delete,detail' },
