@@ -122,7 +122,7 @@ export default class GoodService extends Service {
       },
       include: [
         { model: this.app.model.SystemFile, as: 'pic', attributes: [ ] },
-        { model: this.app.model.GoodSpec, as: 'apecs', attributes: { exclude: [ 'updatedAt', 'createdAt' ] } },
+        { model: this.app.model.GoodSpec, as: 'specs', attributes: { exclude: [ 'updatedAt', 'createdAt' ] } },
       ],
     });
     const images = await this.app.model.GoodImage.findAll({
@@ -131,9 +131,9 @@ export default class GoodService extends Service {
         { model: this.app.model.SystemFile, as: 'file' },
       ],
     }) || [];
-    const specs = await this.app.model.GoodSpec.findAll({
-      where: { goodId: id },
-    }) || [];
+    // const specs = await this.app.model.GoodSpec.findAll({
+    //   where: { goodId: id },
+    // }) || [];
     if (this.ctx.user) {
       const fav = await this.app.model.UserFav.findOne({
         where: { goodId: id, userId: this.ctx.user },
@@ -141,7 +141,7 @@ export default class GoodService extends Service {
       data.setDataValue('isFav', !!fav);
     }
     data.setDataValue('images', images.map(item => item.file));
-    data.setDataValue('specs', specs);
+    // data.setDataValue('specs', specs);
     return data;
   }
   // 删除

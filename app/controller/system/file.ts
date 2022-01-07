@@ -1,53 +1,60 @@
-import { Controller } from "egg";
-import { bp } from "egg-blueprint";
-const fs = require("mz/fs");
-const path = require("path");
-const dayjs = require("dayjs");
-const pump = require("mz-modules/pump");
+import { Controller } from 'egg';
+import { bp } from 'egg-blueprint';
+const fs = require('mz/fs');
+const path = require('path');
+const dayjs = require('dayjs');
+const pump = require('mz-modules/pump');
 const auth = require('../../middleware/auth')
 /**
  * @Controller 角色
  */
-bp.prefix("/system/file", "FileController");
+bp.prefix('/system/file', 'FileController');
 export default class FileController extends Controller {
   /** 分页列表 */
-  @bp.get("/", auth('system-file', 'list'))
+  @bp.get('/', auth('system-file', 'list'))
   public async index() {
     const { ctx } = this;
-    let list = await ctx.service.system.file.list(ctx.query);
+    const list = await ctx.service.system.file.list(ctx.query);
+    ctx.success(list);
+  }
+  /** 查询自己的文件列表 */
+  @bp.get('/my', auth())
+  public async my() {
+    const { ctx } = this;
+    const list = await ctx.service.system.file.list({ ...ctx.query, creator: ctx.user });
     ctx.success(list);
   }
   /** 不分页列表 */
-  @bp.get("/list", auth('system-file', 'list'))
+  @bp.get('/list', auth('system-file', 'list'))
   public async list() {
     const { ctx } = this;
-    let list = await ctx.service.system.file.select();
+    const list = await ctx.service.system.file.select();
     ctx.success(list);
   }
 
-  @bp.post("/save", auth('system-file', 'add'))
+  @bp.post('/save', auth('system-file', 'add'))
   public async save() {
     const { ctx } = this;
-    let params = ctx.request.body;
-    let ret = await ctx.service.system.file.save(params);
-    if (ret.code == 0) {
+    const params = ctx.request.body;
+    const ret = await ctx.service.system.file.save(params);
+    if (ret.code === 0) {
       ctx.success();
     } else {
       ctx.fail(ret.message, ret.code);
     }
   }
-  @bp.del("/:id", auth('system-file', 'delete'))
+  @bp.del('/:id', auth('system-file', 'delete'))
   public async remove() {
     const { ctx } = this;
-    let ret = await ctx.service.system.file.remove(ctx.params.id);
-    if (ret.code == 0) {
+    const ret = await ctx.service.system.file.remove(ctx.params.id);
+    if (ret.code === 0) {
       ctx.success();
     } else {
       ctx.fail(ret.message, ret.code);
     }
   }
 
-  @bp.get("/:id", auth('system-file', 'detail'))
+  @bp.get('/:id', auth('system-file', 'detail'))
   public async detail() {
     const { ctx } = this;
     const data = await ctx.service.system.file.detail(ctx.params.id);
@@ -61,7 +68,7 @@ export default class FileController extends Controller {
    *
    **/
 
-  @bp.post("/upload", auth())
+  @bp.post('/upload', auth())
   async fileupload() {
     const { ctx } = this;
     const files = ctx.request.files;
@@ -71,13 +78,13 @@ export default class FileController extends Controller {
       for (const file of files) {
         // const filename = file.filename.toLowerCase();
         // 基础的目录
-        const uplaodBasePath = "app/public/uploads";
+        const uplaodBasePath = 'app/public/uploads';
         // 生成文件名
         const filename = `${Date.now()}${Math.random() * 1000}${path
           .extname(file.filename)
           .toLocaleLowerCase()}`;
         // 生成文件夹
-        const dirname = dayjs(Date.now()).format("YYYY/MM/DD");
+        const dirname = dayjs(Date.now()).format('YYYY/MM/DD');
         function mkdirsSync(dirname) {
           if (fs.existsSync(dirname)) {
             return true;
@@ -99,11 +106,11 @@ export default class FileController extends Controller {
         const fileStat = fs.statSync(targetPath);
         const image = {
           format: file.mime,
-          url: "/public/uploads/" + dirname + "/" + filename,
+          url: '/public/uploads/' + dirname + '/' + filename,
           path: targetPath,
           size: fileStat.size,
           name: filename,
-          type: file.mime.split("/").shift(),
+          type: file.mime.split('/').shift(),
           creator: ctx.user,
         };
         const iobj = await this.app.model.SystemFile.create(image);

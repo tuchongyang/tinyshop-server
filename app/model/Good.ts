@@ -22,7 +22,7 @@ module.exports = app => {
         // 一对多
         app.model.Good.hasMany(app.model.GoodImage, { foreignKey: 'goodId', targetKey: 'id'});
         // 一对多
-        app.model.Good.hasMany(app.model.GoodSpec, { foreignKey: 'goodId', targetKey: 'id',as:'apecs'});
+        app.model.Good.hasMany(app.model.GoodSpec, { foreignKey: 'goodId', targetKey: 'id',as:'specs'});
         // 一对一
         Good.belongsTo(app.model.GoodCategory, { foreignKey: 'categoryId', targetKey: 'id', as: 'category'});// 一对一
         Good.belongsTo(app.model.SystemFile, { foreignKey: 'picId', targetKey: 'id', as: 'pic'});
