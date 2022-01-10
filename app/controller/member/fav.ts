@@ -31,7 +31,7 @@ export default class FavController extends Controller {
                         "content": "这里是描述",
                         "thumbnail": null,
                         "categoryId": 18,
-                        "mechantId": 1,
+                        "merchantId": 1,
                         "salePrice": null,
                         "marketPrice": null,
                         "sales": 0,

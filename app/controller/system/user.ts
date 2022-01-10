@@ -63,8 +63,8 @@ export default class UserController extends Controller {
    * @api {post} /api/system/user/login 登录
    * @apiName login
    * @apiGroup 用户管理
-   * @apiParam {name} 用户名、邮箱、手机
-   * @apiParam {password} 密码
+   * @apiParam {string} name 用户名或邮箱或手机
+   * @apiParam {string} password 密码
    *
    * @apiParamExample {json} 请求示例:
    * {

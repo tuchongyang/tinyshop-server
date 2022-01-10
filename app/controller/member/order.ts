@@ -139,6 +139,31 @@ export default class MemberOrderController extends Controller {
             ctx.fail(ret.message,ret.code)
         }
     }
+  /**
+   * @api {post} /api/member/order/receive/1 确认收货
+   * @apiName userOrderReceive
+   * @apiGroup 个人中心-我的订单
+   * @apiParam {Number} id 订单ID
+   * @apiDescription 后台只是改了一个状态
+   */
+  @bp.post('/receive/:id', auth())
+  public async receive() {
+    const { ctx } = this;
+    let ret = await ctx.service.member.order.receive(ctx.params.id);
+    if(ret.code==0){
+      // 确认收货后，要将商品的销量数据+1
+      const goodLines = await ctx.model.GoodOrderLine.findAll({
+          where: { orderId: ctx.params.id }
+      })
+      for(let i=0;i<goodLines.length;i++){
+        const curGood = await ctx.model.Good.findOne({ where: {id: goodLines[i].goodId }});
+        await ctx.model.Good.update({sales: curGood.sales + 1}, { where: { id: goodLines[i].goodId }});
+      }
+      ctx.success();
+    }else{
+        ctx.fail(ret.message, ret.code);
+    }
+  }
     /**
      * @api {get} /api/member/order/1 订单详情
      * @apiName userOrderDetail

@@ -43,7 +43,7 @@ export default class OrderService extends Service {
   public async save(options: any) {
     const { ctx } = this;
     let results = { code: 0, message: '添加成功' };
-    const mechantModel = await this.app.model.Merchant.findOne({ where: { id: options.merchantId } });
+    const merchantModel = await this.app.model.Merchant.findOne({ where: { id: options.merchantId } });
     const addressModel = await this.app.model.UserAddress.findOne({ where: { id: options.addressId } });
 
     if (!addressModel) {
@@ -86,8 +86,8 @@ export default class OrderService extends Service {
       linkPhone: addressModel.tel,
       goodsTotalQty: options.goodList.length,
       totalAmount: goodList.reduce((next, cur) => next + cur.spec.salePrice * cur.qty, 0),
-      merchantId: mechantModel.id,
-      shopName: mechantModel.name,
+      merchantId: merchantModel.id,
+      shopName: merchantModel.name,
       remark: options.remark,
       userId: ctx.user,
       userName: currentUser.name,
@@ -151,6 +151,16 @@ export default class OrderService extends Service {
     let results;
     await this.ctx.model.GoodOrder.update({ status: 'paid' }, { where: { id } }).then(() => {
       results = { code: 0, message: '支付成功' };
+    }).catch(error => {
+      results = { code: 400, message: error };
+    });
+    return results;
+  }
+  // 确认收货
+  public async receive(id) {
+    let results;
+    await this.ctx.model.GoodOrder.update({ status: 'completed' }, { where: { id } }).then(() => {
+      results = { code: 0, message: '成功' };
     }).catch(error => {
       results = { code: 400, message: error };
     });

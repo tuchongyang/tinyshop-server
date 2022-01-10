@@ -26,4 +26,7 @@ module.exports = {
     }
     return tokenCache && tokenCache.user || undefined;
   },
+  async getUser() {
+    return await this.service.cache.redis.get('user-' + this.user);
+  },
 };

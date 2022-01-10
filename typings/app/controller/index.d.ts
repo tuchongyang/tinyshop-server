@@ -12,6 +12,8 @@ import ExportShopBanner from '../../../app/controller/shop/banner';
 import ExportShopCategory from '../../../app/controller/shop/category';
 import ExportShopGood from '../../../app/controller/shop/good';
 import ExportShopOrder from '../../../app/controller/shop/order';
+import ExportStatisticsDashboard from '../../../app/controller/statistics/dashboard';
+import ExportStatisticsDashboardadmin from '../../../app/controller/statistics/dashboardadmin';
 import ExportStoreBanner from '../../../app/controller/store/banner';
 import ExportStoreCategory from '../../../app/controller/store/category';
 import ExportStoreGood from '../../../app/controller/store/good';
@@ -41,6 +43,10 @@ declare module 'egg' {
       category: ExportShopCategory;
       good: ExportShopGood;
       order: ExportShopOrder;
+    }
+    statistics: {
+      dashboard: ExportStatisticsDashboard;
+      dashboardadmin: ExportStatisticsDashboardadmin;
     }
     store: {
       banner: ExportStoreBanner;

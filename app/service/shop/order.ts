@@ -67,6 +67,17 @@ export default class OrderService extends Service {
     });
     return results;
   }
+  // 更新
+  public async update(params) {
+    let results;
+    const { id, ...args } = params;
+    await this.ctx.model.GoodOrder.update(args, { where: { id } }).then(() => {
+      results = { code: 0, message: '更新成功' };
+    }).catch(error => {
+      results = { code: 400, message: error };
+    });
+    return results;
+  }
   // 取消
   public async cancel(id) {
     let results;

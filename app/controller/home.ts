@@ -57,7 +57,7 @@ export default class HomeController extends Controller {
       { id: 'merchant', name: '商家管理', actions: 'list,add,delete,detail,update' },
       { id: 'shop-good', name: '商品管理', actions: 'list,add,delete,detail' },
       { id: 'shop-category', name: '商品分类管理', actions: 'list,add,delete,detail' },
-      { id: 'shop-order', name: '订单', actions: 'list,add,delete,detail' },
+      { id: 'shop-order', name: '订单', actions: 'list,add,delete,detail,send' },
       { id: 'shop-banner', name: '轮播图', actions: 'list,add,delete,detail' },
     ];
     // 角色菜单
@@ -96,7 +96,7 @@ export default class HomeController extends Controller {
       { roleId: 2, permissionId: 'shop-good', actions: 'list,add,delete,detail' },
       { roleId: 2, permissionId: 'shop-category', actions: 'list,add,delete,detail' },
       { roleId: 2, permissionId: 'merchant', actions: 'detail,update' },
-      { roleId: 2, permissionId: 'shop-order', actions: 'list,add,delete,detail' },
+      { roleId: 2, permissionId: 'shop-order', actions: 'list,add,delete,detail,send' },
       { roleId: 2, permissionId: 'shop-banner', actions: 'list,add,delete,detail' },
     ];
     const users = [{

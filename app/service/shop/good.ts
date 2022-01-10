@@ -72,11 +72,13 @@ export default class GoodService extends Service {
     const { ctx } = this;
     let results = { code: 400, message: '失败' };
     let goodId = options.id;
-    const mechantId = options.mechantId;
+    const user = ctx.getUser();
+    const merchantId = options.merchantId || user.merchant.id;
     const method = goodId ? 'upsert' : 'create';
     options.specs.sort((a, b) => a.salePrice - b.salePrice);
     options.salePrice = options.specs[0].salePrice;
     options.marketPrice = options.specs[0].marketPrice;
+    options.merchantId = user.merchant.id;
     await ctx.model.Good[method](options).then(res => {
       res && (goodId = res.id);
       results = { code: 0, message: '添加成功' };
@@ -92,7 +94,7 @@ export default class GoodService extends Service {
         return {
           fileId: img.id,
           goodId,
-          mechantId,
+          merchantId,
         };
       }));
     }
@@ -105,7 +107,7 @@ export default class GoodService extends Service {
         return {
           ...item,
           goodId,
-          mechantId,
+          merchantId,
         };
       }));
     }

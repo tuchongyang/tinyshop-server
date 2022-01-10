@@ -44,7 +44,7 @@ export default class GoodController extends Controller {
                   "content": "",//商品详情，富文本
                   "thumbnail": 75,
                   "categoryId": 39,
-                  "mechantId": 1,
+                  "merchantId": 1,
                   "salePrice": "150.00",//售价
                   "marketPrice": "89.00",//原价
                   "sales": 0,//销量
@@ -75,7 +75,7 @@ export default class GoodController extends Controller {
                           "stock": 999,//库存
                           "sales": 0,//销量
                           "goodId": 16,
-                          "mechantId": 1,
+                          "merchantId": 1,
                           "createdAt": "2020-12-15 20:46:41",
                           "updatedAt": "2020-12-15 20:46:41"
                       }
@@ -116,7 +116,7 @@ export default class GoodController extends Controller {
               "content": "",//商品详情，富文本
               "thumbnail": 75,
               "categoryId": 39,
-              "mechantId": 1,
+              "merchantId": 1,
               "salePrice": "150.00",//售价
               "marketPrice": "89.00",//原价
               "sales": 0,//销量
@@ -148,7 +148,7 @@ export default class GoodController extends Controller {
                       "stock": 999,//库存
                       "sales": 0,//销量
                       "goodId": 16,
-                      "mechantId": 1,
+                      "merchantId": 1,
                       "createdAt": "2020-12-15 20:46:41",
                       "updatedAt": "2020-12-15 20:46:41"
                   }

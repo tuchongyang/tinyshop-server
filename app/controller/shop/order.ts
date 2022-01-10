@@ -20,11 +20,14 @@ export default class OrderController extends Controller {
     const list = await ctx.service.shop.order.select();
     ctx.success(list);
   }
-  @bp.post('/save', auth())
+  @bp.post('/send/:id', auth('shop-order', 'send'))
   public async save() {
     const { ctx } = this;
-    const params = ctx.request.body;
-    const ret = await ctx.service.shop.order.save(params);
+    const params = {
+      id: ctx.params.id,
+      status: 'receiving',
+    };
+    const ret = await ctx.service.shop.order.update(params);
     if (ret.code === 0) {
       ctx.success();
     } else {
