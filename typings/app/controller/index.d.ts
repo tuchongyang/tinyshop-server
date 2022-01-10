@@ -3,7 +3,6 @@
 
 import 'egg';
 import ExportHome from '../../../app/controller/home';
-import ExportLogMessage from '../../../app/controller/log/message';
 import ExportMemberAddress from '../../../app/controller/member/address';
 import ExportMemberFav from '../../../app/controller/member/fav';
 import ExportMemberOrder from '../../../app/controller/member/order';
@@ -19,6 +18,7 @@ import ExportStoreCategory from '../../../app/controller/store/category';
 import ExportStoreGood from '../../../app/controller/store/good';
 import ExportSystemFile from '../../../app/controller/system/file';
 import ExportSystemMenu from '../../../app/controller/system/menu';
+import ExportSystemMessage from '../../../app/controller/system/message';
 import ExportSystemPermission from '../../../app/controller/system/permission';
 import ExportSystemReqLog from '../../../app/controller/system/req_log';
 import ExportSystemRole from '../../../app/controller/system/role';
@@ -27,9 +27,6 @@ import ExportSystemUser from '../../../app/controller/system/user';
 declare module 'egg' {
   interface IController {
     home: ExportHome;
-    log: {
-      message: ExportLogMessage;
-    }
     member: {
       address: ExportMemberAddress;
       fav: ExportMemberFav;
@@ -56,6 +53,7 @@ declare module 'egg' {
     system: {
       file: ExportSystemFile;
       menu: ExportSystemMenu;
+      message: ExportSystemMessage;
       permission: ExportSystemPermission;
       reqLog: ExportSystemReqLog;
       role: ExportSystemRole;

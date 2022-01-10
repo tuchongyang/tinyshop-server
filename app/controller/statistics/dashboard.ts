@@ -44,7 +44,7 @@ export default class DashboardController extends Controller {
     // 商品
     const goods = await ctx.model.Good.findAll({
       where: { merchantId: user.merchant?.id || 0 },
-      order: [[ 'sales', 'DESC' ]],
+      order: [[ 'sales', 'DESC' ], [ 'createdAt', 'DESC' ]],
       limit: 10,
     });
     ctx.success(goods);

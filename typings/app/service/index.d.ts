@@ -7,7 +7,6 @@ type AnyFunc<T = any> = (...args: any[]) => T;
 type CanExportFunc = AnyFunc<Promise<any>> | AnyFunc<IterableIterator<any>>;
 type AutoInstanceType<T, U = T extends CanExportFunc ? T : T extends AnyFunc ? ReturnType<T> : T> = U extends AnyClass ? InstanceType<U> : U;
 import ExportCacheRedis from '../../../app/service/cache/redis';
-import ExportLogMessage from '../../../app/service/log/message';
 import ExportMemberAddress from '../../../app/service/member/address';
 import ExportMemberFav from '../../../app/service/member/fav';
 import ExportMemberOrder from '../../../app/service/member/order';
@@ -18,6 +17,7 @@ import ExportShopGood from '../../../app/service/shop/good';
 import ExportShopOrder from '../../../app/service/shop/order';
 import ExportSystemFile from '../../../app/service/system/file';
 import ExportSystemMenu from '../../../app/service/system/menu';
+import ExportSystemMessage from '../../../app/service/system/message';
 import ExportSystemPermission from '../../../app/service/system/permission';
 import ExportSystemReqLog from '../../../app/service/system/req_log';
 import ExportSystemRole from '../../../app/service/system/role';
@@ -27,9 +27,6 @@ declare module 'egg' {
   interface IService {
     cache: {
       redis: AutoInstanceType<typeof ExportCacheRedis>;
-    }
-    log: {
-      message: AutoInstanceType<typeof ExportLogMessage>;
     }
     member: {
       address: AutoInstanceType<typeof ExportMemberAddress>;
@@ -48,6 +45,7 @@ declare module 'egg' {
     system: {
       file: AutoInstanceType<typeof ExportSystemFile>;
       menu: AutoInstanceType<typeof ExportSystemMenu>;
+      message: AutoInstanceType<typeof ExportSystemMessage>;
       permission: AutoInstanceType<typeof ExportSystemPermission>;
       reqLog: AutoInstanceType<typeof ExportSystemReqLog>;
       role: AutoInstanceType<typeof ExportSystemRole>;
