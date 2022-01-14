@@ -35,7 +35,7 @@ export default class MessageController extends Controller {
         }
     }
     
-    @bp.get('/:id')
+    @bp.get('/detail/:id')
     public async detail(){
         const { ctx } = this;
         const data = await ctx.service.log.message.detail(ctx.params.id)
