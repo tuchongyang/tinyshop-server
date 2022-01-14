@@ -25,6 +25,12 @@ module.exports = {
       query: '查询',
       add: '添加',
       delete: '删除',
+      list: '查询',
+      tree: '树列表',
+      menuSave: '保存菜单',
+      permissionSave: '保存权限',
+      update: '修改',
+      send: '发货',
     };
     return map[key] || key;
   },
