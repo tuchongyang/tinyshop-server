@@ -84,6 +84,34 @@ export default class UserController extends Controller {
     }
   }
   /**
+   * @api {post} /api/system/user/regist 注册
+   * @apiName regist
+   * @apiGroup 用户管理
+   * @apiParam {string} name 昵称
+   * @apiParam {string} username 用户名
+   * @apiParam {string} email 邮箱
+   * @apiParam {string} password 密码
+   *
+   * @apiParamExample {json} 请求示例:
+   * {
+   *    "name":"admin",
+   *    "username": "admin",
+   *    "email": "admin@admin.com",
+   *    "password":"123456"
+   * }
+   */
+  @bp.post('/regist')
+  public async regist() {
+    const { ctx } = this;
+    const { name, username, email, password } = ctx.request.body;
+    const { code, message } = await ctx.service.system.user.regist({ name, username, email, password });
+    if (code === 0) {
+      ctx.success();
+    } else {
+      ctx.fail(message);
+    }
+  }
+  /**
    * @api {get} /api/system/user/logout 退出登录
    * @apiName logout
    * @apiGroup 用户管理
@@ -133,7 +161,7 @@ export default class UserController extends Controller {
   public async modify() {
     const { ctx } = this;
     const params = ctx.request.body;
-    const ret = await ctx.service.system.user.update({id: ctx.params.id, ...params });
+    const ret = await ctx.service.system.user.update({ id: ctx.params.id, ...params });
     if (ret.code === 0) {
       ctx.success();
     } else {

@@ -113,6 +113,33 @@ export default class UserService extends Service {
     }
     return results;
   }
+  /**
+   * 注册
+   * @param options
+   */
+  public async regist(options: any) {
+    const { ctx } = this;
+    const { or } = this.app.Sequelize.Op;
+    const { username, email, password } = options;
+    let results = { code: 400, message: '失败' };
+    await ctx.model.SystemUser.findOne({
+      where: { [or]: [{ username }, { email }] }, // 查询条件
+    }).then(async result => {
+      if (!result) {
+        const hash = crypto.createHash('md5');
+        options.password = hash.update(password).digest('hex');
+        await ctx.model.SystemUser.create(options).then(() => {
+          results = { code: 0, message: '注册成功' };
+        }).catch(err => {
+          results = { code: 400, message: err };
+        });
+      } else {
+        results = { code: 400, message: '该账号已存在' };
+      }
+    });
+
+    return results;
+  }
 
   public async detail(id) {
     const data = await this.app.model.SystemUser.findOne({
