@@ -3,7 +3,7 @@ import { bp } from 'egg-blueprint';
 /**
 * @Controller 消息日志
 */
-bp.prefix('/message', 'MessageController');
+bp.prefix('/system/message', 'MessageController');
 export default class MessageController extends Controller {
   /** 分页列表 */
   @bp.get('/')
