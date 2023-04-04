@@ -99,8 +99,8 @@ export default class UserService extends Service {
       if (!data) {
         return (results = { code: 400, message: '帐号或密码错误', token: '' });
       }
-      const userInfo = await this.getUserInfo({ id: data.id });
-      ctx.service.cache.redis.set('user-' + data.id, userInfo);
+      // const userInfo = await this.getUserInfo({ id: data.id });
+      // ctx.service.cache.redis.set('user-' + data.id, userInfo);
       /*
       * sign({根据什么生成token})
       * app.config.jwt.secret 配置的密钥

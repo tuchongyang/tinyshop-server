@@ -27,8 +27,7 @@ export default class BannerController extends Controller {
     public async save(){
         const { ctx } = this;
         let params = ctx.request.body;
-        const user = await ctx.service.cache.redis.get('user-' + ctx.user);
-console.log('user==============',user)
+        const user = ctx.getUser() // await ctx.service.cache.redis.get('user-' + ctx.user);
         let ret = await ctx.service.shop.banner.save({...params,merchantId: user.merchant?.id});
         if(ret.code==0){
             ctx.success()

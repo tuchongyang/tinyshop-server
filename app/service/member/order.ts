@@ -78,7 +78,7 @@ export default class OrderService extends Service {
         spec,
       };
     });
-    const currentUser = await ctx.service.cache.redis.get('user-' + ctx.user);
+    const currentUser = ctx.getUser() // await ctx.service.cache.redis.get('user-' + ctx.user);
     const orderModel = {
       addressId: options.addressId,
       address: [ addressModel.province, addressModel.city, addressModel.county, addressModel.township, addressModel.addressDetail ].filter(a => a).join(''),
