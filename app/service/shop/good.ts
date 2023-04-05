@@ -72,7 +72,7 @@ export default class GoodService extends Service {
     const { ctx } = this;
     let results = { code: 400, message: '失败' };
     let goodId = options.id;
-    const user = ctx.getUser();
+    const user = await ctx.getUser();
     const merchantId = options.merchantId || user.merchant.id;
     const method = goodId ? 'upsert' : 'create';
     options.specs.sort((a, b) => a.salePrice - b.salePrice);
@@ -136,9 +136,9 @@ export default class GoodService extends Service {
     // const specs = await this.app.model.GoodSpec.findAll({
     //   where: { goodId: id },
     // }) || [];
-    if (this.ctx.user) {
+    if (this.ctx.user?.id) {
       const fav = await this.app.model.UserFav.findOne({
-        where: { goodId: id, userId: this.ctx.user },
+        where: { goodId: id, userId: this.ctx.user?.id },
       });
       data.setDataValue('isFav', !!fav);
     }

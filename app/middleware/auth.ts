@@ -2,7 +2,7 @@ import { Context } from 'egg';
 
 const auth = function(permissionId?: string, action?: string) {
   return async function auth(ctx: Context) {
-    if (!ctx.user) {
+    if (!ctx.user?.id) {
       ctx.fail('未登录', 401);
       return false;
     }

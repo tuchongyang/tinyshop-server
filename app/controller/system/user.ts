@@ -149,7 +149,7 @@ export default class UserController extends Controller {
   public async update() {
     const { ctx } = this;
     const params = ctx.request.body;
-    params.id = ctx.user;
+    params.id = ctx.user.id;
     const ret = await ctx.service.system.user.update(params);
     if (ret.code === 0) {
       ctx.success();
@@ -239,7 +239,7 @@ export default class UserController extends Controller {
   @bp.get('/info', auth())
   public async info() {
     const { ctx } = this;
-    const userInfo = await ctx.service.system.user.getUserInfo({ id: ctx.user });
+    const userInfo = await ctx.service.system.user.getUserInfo({ id: ctx.user.id });
     return ctx.success(userInfo);
   }
   @bp.get('/detail/:id', auth('system-user', 'detail'))
@@ -251,7 +251,7 @@ export default class UserController extends Controller {
   @bp.get('/menu', auth())
   public async menu() {
     const { ctx } = this;
-    const useObj = await ctx.service.system.user.detail(ctx.user);
+    const useObj = await ctx.service.system.user.detail(ctx.user.id);
     const list = await ctx.service.system.user.getMenuTree(useObj.roleId);
     ctx.success(list);
   }

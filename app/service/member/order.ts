@@ -20,7 +20,7 @@ export default class OrderService extends Service {
       orderNo: options.orderNo ? {
         [Op.substring]: '%' + options.orderNo,
       } : '',
-      userId: this.ctx.user,
+      userId: this.ctx.user?.id,
     };
     for (const i in where) {
       if (!where[i]) delete where[i];
@@ -89,7 +89,7 @@ export default class OrderService extends Service {
       merchantId: merchantModel.id,
       shopName: merchantModel.name,
       remark: options.remark,
-      userId: ctx.user,
+      userId: ctx.user?.id,
       userName: currentUser.name,
       orderNo: ctx.helper.randomNo(3),
     };
