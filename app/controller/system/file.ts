@@ -21,7 +21,7 @@ export default class FileController extends Controller {
   @bp.get('/my', auth())
   public async my() {
     const { ctx } = this;
-    const list = await ctx.service.system.file.list({ ...ctx.query, creator: ctx.user });
+    const list = await ctx.service.system.file.list({ ...ctx.query, creator: ctx.user.id });
     ctx.success(list);
   }
   /** 不分页列表 */
@@ -111,7 +111,7 @@ export default class FileController extends Controller {
           size: fileStat.size,
           name: filename,
           type: file.mime.split('/').shift(),
-          creator: ctx.user,
+          creator: ctx.user.id,
         };
         const iobj = await this.app.model.SystemFile.create(image);
         images.push(iobj);

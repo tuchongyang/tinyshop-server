@@ -100,13 +100,15 @@ export default class UserService extends Service {
         return (results = { code: 400, message: '帐号或密码错误', token: '' });
       }
       const userInfo = await this.getUserInfo({ id: data.id });
-      ctx.service.cache.redis.set('user-' + data.id, userInfo);
+      // ctx.service.cache.redis.set('user-' + data.id, userInfo);
       /*
       * sign({根据什么生成token})
       * app.config.jwt.secret 配置的密钥
       * {expiresIn:'24h'} 过期时间
       */
-      const token = this.app.jwt.sign({ user: data.id }, this.config.jwt.secret, { expiresIn: '24h' });
+    //  console.log('userInfo',userInfo.dataValues.merchant)
+     const merchant = userInfo.dataValues.merchant || {}
+      const token = this.app.jwt.sign({ user: {id: userInfo.id, name: userInfo.name, username: userInfo.username,merchant: {id: merchant.id, name: merchant.name}} }, this.config.jwt.secret, { expiresIn: '24h' });
       results = { code: 0, message: '登录成功', token };
     } else {
       results = { code: 400, message: '账号不存在', token: '' };

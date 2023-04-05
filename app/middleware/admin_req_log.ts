@@ -11,7 +11,7 @@ export default function AdminReqLog(): any {
     const { url } = ctx;
     // 该接口不做记录/admin/sys/log/page
     if (url.startsWith('/api') && !url.startsWith('/api/system/reqlog') && ctx.req.method !== 'GET') {
-      ctx.service.system.reqLog.save(url.split('?')[0], ctx.req.method === 'GET' ? ctx.request.query : ctx.request.body, ctx.status, reportTime, ctx.req.method, ctx.user || null);
+      ctx.service.system.reqLog.save(url.split('?')[0], ctx.req.method === 'GET' ? ctx.request.query : ctx.request.body, ctx.status, reportTime, ctx.req.method, ctx.user?.id || null);
     }
   };
 }
